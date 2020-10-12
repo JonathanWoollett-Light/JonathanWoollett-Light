@@ -25,6 +25,5 @@ While most updates are extremely minor some are complete overhauls, its come a l
 <code><img height="70" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/ISO_C%2B%2B_Logo.svg/800px-ISO_C%2B%2B_Logo.svg.png"></code> <!-- C++ -->
 <code><img height="70" src="https://seeklogo.com/images/C/c-programming-language-logo-9B32D017B1-seeklogo.com.png"></code> <!-- C -->
 <code><img height="70" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1024px-Python-logo-notext.svg.png"></code> <!-- Python -->
-<code><img height="70" src="https://upload.wikimedia.org/wikipedia/commons/8/82/C_Sharp_logo.png"></code> <!-- C# -->
 <code><img height="70" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Ada_Mascot_with_slogan.png/1200px-Ada_Mascot_with_slogan.png"></code> <!-- Ada -->
 <code><img height="70" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/1200px-Unofficial_JavaScript_logo_2.svg.png"></code> <!-- JavaScript -->
