@@ -4,7 +4,7 @@ I lean towards systems programming and like optimising things.
 
 My biggest project Cogent is currently sitting at its 42nd version.
 
-Being first published 16th July 2020 that's 42 versions in 88 days (as of 13/10/2020), on average a version every other day.
+Being first published 16th July 2020 that's 42 versions in 88 days (as of 13/10/2020), on average a version every other day. Most updates are very minor, but it has gone a quite a few complete overhauls.
 
 ### 🔭 My current focus ###
 
