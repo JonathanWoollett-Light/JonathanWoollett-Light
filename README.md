@@ -1,4 +1,4 @@
-### Hi  I'm Jonathan
+### Hi ✋ I'm Jonathan
 
 I lean towards systems programming and like optimising things.
 
