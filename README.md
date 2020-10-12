@@ -2,10 +2,6 @@
 
 I lean towards systems programming and like optimising things.
 
-My biggest project Cogent is currently sitting at its 42nd version.
-
-Being first published 16th July 2020 that's 42 versions in 88 days (as of 13/10/2020), on average a version every other day. Most updates are very minor, but it has gone a quite a few complete overhauls.
-
 ### 🔭 My current focus ###
 
 Rust, neural nets, HPC (specifically GPU compute).
@@ -16,6 +12,8 @@ A easy to use Rust framework for training basic neural network classifiers.
 
 [![lib.rs.io](https://img.shields.io/crates/v/cogent?color=blue&label=lib.rs)](https://lib.rs/crates/cogent)
 [![downloads](https://img.shields.io/crates/d/cogent)](https://crates.io/crates/cogent)
+
+Being first published on the 16th of July 2020 Cogent is currently sitting at its 42nd version, in 88 days (as of 13/10/2020) when taken on average, that is a new version every other day. While most updates are extremely minor some are complete overhauls, its come a long way in its life.
 
 ### 💬 My languages: ###
 
