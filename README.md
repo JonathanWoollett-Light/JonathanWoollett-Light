@@ -2,9 +2,9 @@
 
 I lean towards systems programming and like optimising things.
 
-### 🔭 My current focus ###
+### 🔭 My current focus: ###
 
-Rust, neural nets, HPC (specifically GPU compute right now).
+Rust, neural nets and HPC (specifically GPU compute right now).
 
 ### 🌟 The best thing I've made: [Cogent](https://github.com/JonathanWoollett-Light/cogent) ###
 
