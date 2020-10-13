@@ -13,11 +13,11 @@ A easy to use Rust framework for training basic neural network classifiers.
 [![lib.rs.io](https://img.shields.io/crates/v/cogent?color=blue&label=lib.rs)](https://lib.rs/crates/cogent)
 [![downloads](https://img.shields.io/crates/d/cogent)](https://crates.io/crates/cogent)
 
-With Cogent being first published on the 16th of July 2020 it is currently sitting at its 42nd version.
+Since Cogent's initial commit on the 28th of September 2019 it is currently sitting at its 42nd version.
 
-Over 88 days (as of 13/10/2020) when taken on average that's a new version every other day.
+Over 380 days (as of 13/10/2020) when taken on average that's a new version every 9 days.
 
-While most updates are extremely minor some are complete overhauls, its come a long way in 88 days.
+While most updates are extremely minor some are complete overhauls, its come a long way in a year(ish).
 
 ### 💬 My languages: ###
 
