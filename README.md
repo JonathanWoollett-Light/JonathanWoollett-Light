@@ -6,7 +6,7 @@ I lean towards systems programming and like optimising things.
 
 Rust, neural nets and HPC (specifically GPU compute right now).
 
-### 🌟 The best thing I've made: [Cogent](https://github.com/JonathanWoollett-Light/cogent) ###
+### 🌟 The biggest thing I've made: [Cogent](https://github.com/JonathanWoollett-Light/cogent) ###
 
 A easy to use Rust framework for training basic neural network classifiers.
 
