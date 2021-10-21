@@ -23,7 +23,6 @@ While most of the updates were extremely minor, quite a few where complete overh
 
 <code><a href="https://www.rust-lang.org/"><img height="70" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Rust_programming_language_black_logo.svg/1200px-Rust_programming_language_black_logo.svg.png"></a></code> <!-- Rust -->
 <code><img height="70" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/ISO_C%2B%2B_Logo.svg/800px-ISO_C%2B%2B_Logo.svg.png"></code> <!-- C++ -->
-<code><img height="70" src="https://seeklogo.com/images/C/c-programming-language-logo-9B32D017B1-seeklogo.com.png"></code> <!-- C -->
 <code><a href="https://www.python.org/"><img height="70" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1024px-Python-logo-notext.svg.png"></a></code> <!-- Python -->
 
- **Minor languages:** [JavaScript](https://en.wikipedia.org/wiki/JavaScript), [HTML5](https://en.wikipedia.org/wiki/HTML5)+[CSS](https://en.wikipedia.org/wiki/CSS), [GLSL](https://en.wikipedia.org/wiki/OpenGL_Shading_Language)
+ **Minor languages:** [JavaScript](https://en.wikipedia.org/wiki/JavaScript), [HTML5](https://en.wikipedia.org/wiki/HTML5)+[CSS](https://en.wikipedia.org/wiki/CSS), [GLSL](https://en.wikipedia.org/wiki/OpenGL_Shading_Language), [C](https://en.wikipedia.org/wiki/C_(programming_language))
