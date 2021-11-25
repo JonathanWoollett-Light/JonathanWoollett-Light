@@ -36,7 +36,7 @@ Maths Site | Startup project for using recognition of handwritten mathemtics | R
 [factorio-optimizer](https://github.com/JonathanWoollett-Light/factorio-optimizer) | Furthering Factorio Calculator to be more more general. | Python, PyTorch
 [simple_optimization](https://github.com/JonathanWoollett-Light/simple_optimization) | Easy to use simple multi-threaded optimizers. | Rust |
 [tnkd](https://github.com/JonathanWoollett-Light/tnkd) | A submod for Old World Blues (a mod for Hearts of Iron IV). | Paradox script |
-[BLAS](https://github.com/JonathanWoollett-Light/BLAS) | A simpler better website illustrating BLAS operations. | HTML, Python, Manim |
+[BLAS](https://github.com/JonathanWoollett-Light/BLAS) | A simpler better website illustrating BLAS operations. | Python, Manim |
 [a-little-more-than-an-introduction-to](https://github.com/JonathanWoollett-Light/a-little-more-than-an-introduction-to) | Python code for the manim animations in my youtube series.  | Python, Manim |
 [GLSL-BLAS](https://github.com/JonathanWoollett-Light/GLSL-BLAS) | GLSL code for BLAS | C++, GLSL |
 [cogent](https://github.com/JonathanWoollett-Light/cogent) |  Simple neural network library for classification written in Rust. | Rust, ArrayFire |
