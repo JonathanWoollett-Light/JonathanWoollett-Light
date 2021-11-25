@@ -8,6 +8,8 @@ Rust and machine learning.
 
 ### 🌟 The biggest thing I've made: [Cogent](https://github.com/JonathanWoollett-Light/cogent) ###
 
+*Well... the biggest thing I've made that's public.*
+
 A easy to use Rust framework for training basic neural network classifiers.
 
 [![lib.rs.io](https://img.shields.io/crates/v/cogent?color=blue&label=lib.rs)](https://lib.rs/crates/cogent)
