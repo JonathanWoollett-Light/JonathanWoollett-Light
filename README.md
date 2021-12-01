@@ -33,7 +33,7 @@ Project | Description | Notable tech
 ---|---|---
 Maths Site | Startup project for using recognition of handwritten mathemtics | Rust, PyTorch |
 [adjacency-tree](https://github.com/JonathanWoollett-Light/adjacency-tree) |  A datastructure for distributed spatial computation. | Rust
-[factorio-optimizer](https://github.com/JonathanWoollett-Light/factorio-optimizer) | Furthering Factorio Calculator to be more more general. | Python, PyTorch
+[factorio-optimizer](https://github.com/JonathanWoollett-Light/factorio-optimizer) | Furthering Factorio Calculator to be more general. | Python, PyTorch
 [simple_optimization](https://github.com/JonathanWoollett-Light/simple_optimization) | Easy to use simple multi-threaded optimizers. | Rust |
 [tnkd](https://github.com/JonathanWoollett-Light/tnkd) | A submod for Old World Blues (a mod for Hearts of Iron IV). | Paradox script |
 [BLAS](https://github.com/JonathanWoollett-Light/BLAS) | A simpler better website illustrating BLAS operations. | Python, Manim |
