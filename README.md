@@ -2,7 +2,7 @@
 
 I lean towards systems programming and like optimising things.
 
-### 🌟 The biggest thing I've made: [Cogent](https://github.com/JonathanWoollett-Light/cogent)
+### 🌟 The biggest thing I've made alone: [Cogent](https://github.com/JonathanWoollett-Light/cogent)
 
 *Well... the biggest thing I've made that's public.*
 
