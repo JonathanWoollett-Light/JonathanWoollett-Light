@@ -15,4 +15,4 @@ From the 28/09/2019 to 13/10/2020 (over 380 days), Cogent on average recieved a 
 
 ### 💬 Languages:
 
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=JonathanWoollett-Light&layout=compact&langs_count=8&exclude_repo=CSC327-A2)](https://github.com/JonathanWoollett-Light/github-readme-stats)
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=JonathanWoollett-Light&layout=compact&langs_count=12&exclude_repo=CSC327-A2)](https://github.com/JonathanWoollett-Light/github-readme-stats)
