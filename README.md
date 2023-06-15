@@ -13,7 +13,7 @@ A easy to use Rust framework for training basic neural network classifiers.
 
 From the 28/09/2019 to 13/10/2020 (over 380 days), Cogent on average recieved a new version every 9 days (many of which where complete overalls).
 
-### 💬 Languages:
+### Stats
 
 [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=JonathanWoollett-Light&layout=compact&langs_count=12&hide=java&exclude_repo=CSC327-A2&theme=dark)](https://github.com/JonathanWoollett-Light/github-readme-stats)
 ![Jonathan's GitHub stats](https://github-readme-stats.vercel.app/api?username=JonathanWoollett-Light&theme=dark)
