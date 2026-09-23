@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="746" height="220" viewBox="0 0 746 220" role="img">
+<title>Commits per year, before and after AI</title>
+<style>
+text { font: 11px system-ui, -apple-system, 'Segoe UI', sans-serif; fill: #7d7b76 }
+.head { font-size: 13px; font-weight: 600 }
+.num { text-anchor: middle; font-variant-numeric: tabular-nums }
+.commits { fill: #2a78d6 }
+.ai { fill: #d95926 }
+line { stroke: #898781; stroke-opacity: 0.5 }
+</style>
+<rect class="commits" x="32" y="5" width="12" height="12" rx="2"/>
+<text class="head" x="50" y="16">Commits</text>
+<rect class="ai" x="124" y="5" width="12" height="12" rx="2"/>
+<text class="head" x="142" y="16">with an AI co-author</text>
+<text class="head" x="291.6" y="42" text-anchor="middle">Before AI</text>
+<text class="head" x="648.6" y="42" text-anchor="middle">After AI</text>
+<line x1="551.3" y1="28" x2="551.3" y2="196"/>
+<line x1="32" y1="196.5" x2="746" y2="196.5"/>
+<path class="commits" d="M52,196.0V196.0Q52,194.0 54.0,194.0H74.0Q76,194.0 76,196.0V196.0Z"/>
+<text class="num" x="64.0" y="188.0">11</text>
+<text class="num" x="64.0" y="213">2016</text>
+<path class="commits" d="M117,196.0V182.0Q117,178.0 121.0,178.0H137.0Q141,178.0 141,182.0V196.0Z"/>
+<text class="num" x="129.0" y="172.0">106</text>
+<text class="num" x="129.0" y="213">2017</text>
+<path class="commits" d="M182,196.0V188.9Q182,184.9 186.0,184.9H202.0Q206,184.9 206,188.9V196.0Z"/>
+<text class="num" x="194.0" y="178.9">65</text>
+<text class="num" x="194.0" y="213">2018</text>
+<path class="commits" d="M247,196.0V188.3Q247,184.3 251.0,184.3H267.0Q271,184.3 271,188.3V196.0Z"/>
+<text class="num" x="259.0" y="178.3">69</text>
+<text class="num" x="259.0" y="213">2019</text>
+<path class="commits" d="M312,196.0V120.1Q312,116.1 316.0,116.1H332.0Q336,116.1 336,120.1V196.0Z"/>
+<text class="num" x="324.0" y="110.1">470</text>
+<text class="num" x="324.0" y="213">2020</text>
+<path class="commits" d="M377,196.0V116.8Q377,112.8 381.0,112.8H397.0Q401,112.8 401,116.8V196.0Z"/>
+<text class="num" x="389.0" y="106.8">489</text>
+<text class="num" x="389.0" y="213">2021</text>
+<path class="commits" d="M442,196.0V133.2Q442,129.2 446.0,129.2H462.0Q466,129.2 466,133.2V196.0Z"/>
+<text class="num" x="454.0" y="123.2">393</text>
+<text class="num" x="454.0" y="213">2022</text>
+<path class="commits" d="M507,196.0V76.0Q507,72.0 511.0,72.0H527.0Q531,72.0 531,76.0V196.0Z"/>
+<text class="num" x="519.0" y="66.0">729</text>
+<text class="num" x="519.0" y="213">2023</text>
+<path class="commits" d="M572,196.0V110.0Q572,106.0 576.0,106.0H592.0Q596,106.0 596,110.0V196.0Z"/>
+<text class="num" x="584.0" y="100.0">529</text>
+<text class="num" x="584.0" y="213">2024</text>
+<path class="commits" d="M637,196.0V127.7Q637,123.7 641.0,123.7H657.0Q661,123.7 661,127.7V196.0Z"/>
+<text class="num" x="649.0" y="117.7">425</text>
+<text class="num" x="649.0" y="213">2025</text>
+<path class="commits" d="M702,196.0V149.1Q702,149.1 702.0,149.1H726.0Q726,149.1 726,149.1V196.0Z"/>
+<path class="ai" d="M702,147.1V107.0Q702,103.0 706.0,103.0H722.0Q726,103.0 726,107.0V147.1Z"/>
+<text class="num" x="714.0" y="97.0">535</text>
+<text class="num" x="714.0" y="213">2026</text>
+</svg>

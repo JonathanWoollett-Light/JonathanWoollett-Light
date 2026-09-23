@@ -1,0 +1,3 @@
+# scripts/update_readme.py writes these with LF; keep checkouts identical.
+README.md text eol=lf
+commits.svg text eol=lf

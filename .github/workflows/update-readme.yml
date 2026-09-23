@@ -1,0 +1,43 @@
+name: update-readme
+
+on:
+  schedule:
+    - cron: "30 5 * * *"
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - scripts/update_readme.py
+      - .github/workflows/update-readme.yml
+
+jobs:
+  update-readme:
+    name: Update README
+    runs-on: ubuntu-latest
+    concurrency:
+      group: update-readme
+      cancel-in-progress: false
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      # With only the workflow's own token, the git stats count public
+      # repositories; a STATS_TOKEN secret that can read private ones counts
+      # those too.
+      - name: Refresh stats
+        run: python3 scripts/update_readme.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.STATS_TOKEN || github.token }}
+
+      # Sections whose source was down are left as they were, but the rest
+      # are still worth committing.
+      - name: Commit changes
+        if: ${{ !cancelled() }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md commits.svg
+          git diff --cached --quiet || { git commit -m "Update README stats" && git push; }
