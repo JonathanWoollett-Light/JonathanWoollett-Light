@@ -1,11 +1,11 @@
-"""Refresh the generated parts of README.md and its commits-by-year chart.
+"""Refresh the generated parts of README.md and the two figures in it.
 
-README.md is hand-written apart from the sections between `<!-- name -->` and
-`<!-- /name -->`, which this rewrites from live data:
+README.md is hand-written apart from the text between `<!-- name -->` and
+`<!-- /name -->` markers, which this rewrites from live data:
 
     crates    downloads of my crates, from crates.io
-    mods      subscriptions to my Hearts of Iron IV mods, from the Steam Workshop
-    practice  NeetCode problems solved, from my submissions repository
+    mods      downloads of my Hearts of Iron IV mods, from the Steam Workshop
+    practice  problems I've solved on Project Euler and NeetCode, drawn in euler.svg
     git       my commits before and after AI, from GitHub, charted in commits.svg
 
 A section whose source can't be reached is left as it was, and the script exits
@@ -36,26 +36,23 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 README = ROOT / "README.md"
-CHART = ROOT / "commits.svg"
+EULER_CHART = ROOT / "euler.svg"
+COMMITS_CHART = ROOT / "commits.svg"
 
 USER = "JonathanWoollett-Light"
 USER_AGENT = f"{USER} profile README (https://github.com/{USER}/{USER})"
-RAW = f"https://raw.githubusercontent.com/{USER}/{USER}/main"
 
 CRATES_USER_ID = 79784  # https://crates.io/users/JonathanWoollett-Light
 # Crates from these organisations are team efforts I helped maintain, not mine alone.
 TEAM_ORGS = ("rust-vmm",)
-# Crates that exist to serve a main crate (its proc macros, its internals) and
-# share its downloads, so they'd only pad a list of highlights.
-HELPER_CRATE = re.compile(r"-(macros?|attributes|core|consts)$")
 
-# Steam Workshop ids of my Hearts of Iron IV mods, with my part in each.
-MODS = {
-    3342313594: "Author",  # OWB - The Think Tank
-    3798403425: "Author",  # OWB - Rising Tide
-    2777392649: "One of the developers",  # Millennium Dawn, a team project
-}
+# Steam Workshop ids of my Hearts of Iron IV mods, and of the team one I help develop.
+MY_MODS = {3342313594: "The Think Tank", 3798403425: "Rising Tide"}
+TEAM_MODS = {2777392649: "Millennium Dawn"}
 
+# My project_euler repository draws its own progress grid; the problems it
+# marks solved are redrawn smaller here.
+EULER_GRID = f"https://raw.githubusercontent.com/{USER}/project_euler/master/progress.svg"
 NEETCODE_REPO = f"{USER}/neetcode-submissions"
 
 # Addresses I've committed with that aren't linked to my GitHub account any more
@@ -79,17 +76,21 @@ CO_AUTHOR = re.compile(r"^co-authored-by:(.*)$", re.IGNORECASE | re.MULTILINE)
 
 
 def fetch(url, data=None, headers=None):
-    """Parse the JSON reply to a GET of `url`, or a POST of `data`, retrying server errors."""
+    """The reply to a GET of `url`, or a POST of `data`, retrying server errors."""
     request = urllib.request.Request(url, data, {"User-Agent": USER_AGENT, **(headers or {})})
     for delay in (5, 15, 45, None):
         try:
             with urllib.request.urlopen(request, timeout=60) as response:
-                return json.load(response)
+                return response.read()
         except (urllib.error.URLError, TimeoutError) as error:
             # Asking again won't fix a client error, like a bad token.
             if delay is None or isinstance(error, urllib.error.HTTPError) and error.code < 500:
                 raise
             time.sleep(delay)
+
+
+def fetch_json(url, data=None, headers=None):
+    return json.loads(fetch(url, data, headers))
 
 
 def github_headers():
@@ -102,7 +103,7 @@ def github_headers():
 def graphql(query, **variables):
     """The data and errors from a GitHub GraphQL query, which can partly fail."""
     body = json.dumps({"query": query, "variables": variables}).encode()
-    reply = fetch("https://api.github.com/graphql", body, github_headers())
+    reply = fetch_json("https://api.github.com/graphql", body, github_headers())
     if reply.get("data") is None:
         raise RuntimeError(f"GitHub GraphQL: {reply.get('errors')}")
     return reply["data"], reply.get("errors", [])
@@ -119,6 +120,11 @@ def compact(n):
     return str(n)
 
 
+def listing(items):
+    """["a", "b", "c"] as "a, b and c"."""
+    return " and ".join(filter(None, [", ".join(items[:-1]), items[-1]]))
+
+
 # crates.io
 
 
@@ -126,7 +132,7 @@ def crates_section():
     crates, page = [], 1
     while True:
         query = urllib.parse.urlencode({"user_id": CRATES_USER_ID, "per_page": 100, "page": page})
-        reply = fetch(f"https://crates.io/api/v1/crates?{query}")
+        reply = fetch_json(f"https://crates.io/api/v1/crates?{query}")
         crates += reply["crates"]
         if not reply["crates"] or len(crates) >= reply["meta"]["total"]:
             break
@@ -135,65 +141,57 @@ def crates_section():
     def is_team(crate):
         return any(f"github.com/{org}/" in (crate["repository"] or "") for org in TEAM_ORGS)
 
-    def highlights(group):
-        top = sorted((c for c in group if not HELPER_CRATE.search(c["name"])), key=lambda c: -c["downloads"])
-        return " · ".join(
-            f"[{c['name']}](https://crates.io/crates/{c['name']}) {compact(c['downloads'])}" for c in top[:5]
-        )
-
-    team = [c for c in crates if is_team(c)]
-    mine = [c for c in crates if not is_team(c)]
-    orgs = " and ".join(f"[{org}](https://github.com/{org})" for org in TEAM_ORGS)
-    total = sum(c["downloads"] for c in crates)
-    return "\n".join([
-        f"**{compact(total)} downloads** of the {len(crates)} crates I own on "
-        f"[crates.io](https://crates.io/users/{USER}):",
-        "",
-        f"- **{compact(sum(c['downloads'] for c in team))}** for {len(team)} {orgs} crates I helped maintain "
-        f"at AWS. They're team efforts, so the credit is shared: {highlights(team)}",
-        f"- **{compact(sum(c['downloads'] for c in mine))}** for {len(mine)} of my own: {highlights(mine)}",
-    ])
+    team = [c["downloads"] for c in crates if is_team(c)]
+    mine = [c["downloads"] for c in crates if not is_team(c)]
+    orgs = listing([f"[{org}](https://github.com/{org})" for org in TEAM_ORGS])
+    return (
+        f"{compact(sum(team) + sum(mine))}, of which {compact(sum(mine))} are for "
+        f"[{len(mine)} crates of my own](https://crates.io/users/{USER}) and {compact(sum(team))} "
+        f"for {len(team)} {orgs} crates I co-maintained (team efforts)"
+    )
 
 
 # Steam Workshop
 
 
 def mods_section():
-    form = {"itemcount": len(MODS)} | {f"publishedfileids[{i}]": item for i, item in enumerate(MODS)}
-    reply = fetch(
+    ids = [*MY_MODS, *TEAM_MODS]
+    form = {"itemcount": len(ids)} | {f"publishedfileids[{i}]": id for i, id in enumerate(ids)}
+    reply = fetch_json(
         "https://api.steampowered.com/ISteamRemoteStorage/GetPublishedFileDetails/v1/",
         urllib.parse.urlencode(form).encode(),
     )
-    lines = [
-        "| Mod | My part | Subscribers | Downloads |",
-        "| :-- | :-- | --: | --: |",
-    ]
+    downloads = {}
     for mod in reply["response"]["publishedfiledetails"]:
         if mod["result"] != 1:
             raise RuntimeError(f"Steam Workshop item {mod['publishedfileid']} is unavailable")
-        link = f"https://steamcommunity.com/sharedfiles/filedetails/?id={mod['publishedfileid']}"
-        title = mod["title"].replace("|", "\\|")  # a bare | would end the table cell
-        lines.append(
-            f"| [{title}]({link}) | {MODS[int(mod['publishedfileid'])]} "
-            f"| {mod['subscriptions']:,} | {mod['lifetime_subscriptions']:,} |"
-        )
-    # Steam doesn't publish downloads, so this is the closest it has.
-    lines += ["", "<sub>Downloads are the Steam Workshop's lifetime subscriptions.</sub>"]
-    return "\n".join(lines)
+        # Steam doesn't count downloads; its lifetime subscriptions are the nearest thing.
+        downloads[int(mod["publishedfileid"])] = mod["lifetime_subscriptions"]
+
+    def links(mods):
+        return listing([
+            f"[{name}](https://steamcommunity.com/sharedfiles/filedetails/?id={id}) {compact(downloads[id])}"
+            for id, name in mods.items()
+        ])
+
+    return f"{links(MY_MODS)}, which are mine, and {links(TEAM_MODS)}, a team project I'm one of the developers of"
 
 
-# NeetCode
+# Project Euler and NeetCode
 
 
 def practice_section():
+    grid = fetch(EULER_GRID).decode()
+    total = int(re.search(r'data-problems="(\d+)"', grid)[1])
+    solved = {int(n) for n in re.findall(r"Problem (\d+): solved", grid)}
     url = f"https://api.github.com/repos/{NEETCODE_REPO}/git/trees/HEAD?recursive=1"
-    tree = fetch(url, headers=github_headers())["tree"]
+    tree = fetch_json(url, headers=github_headers())["tree"]
     # Solutions are synced to "<topic>/<problem>/submission-<n>.<ext>".
-    problems = {entry["path"].split("/")[1] for entry in tree if entry["path"].count("/") == 2}
+    neetcode = {entry["path"].split("/")[1] for entry in tree if entry["path"].count("/") == 2}
+    write_if_changed(EULER_CHART, euler_chart(solved, total))
     return (
-        f"I'm working through [Project Euler](https://projecteuler.net) "
-        f"([solutions](https://github.com/{USER}/project_euler)) and [NeetCode](https://neetcode.io), "
-        f"where I've solved {len(problems)} problems ([solutions](https://github.com/{NEETCODE_REPO}))."
+        f"{len(solved)} [Project Euler](https://github.com/{USER}/project_euler) and "
+        f"{len(neetcode)} [NeetCode](https://github.com/{NEETCODE_REPO}) problems solved"
     )
 
 
@@ -322,18 +320,19 @@ def git_section():
     commits = my_commits()
     now = datetime.now(timezone.utc)
     first = min(c.date for c in commits)
-    by_year = {year: [c for c in commits if c.date.year == year] for year in range(first.year, now.year + 1)}
     era = datetime(AI_ERA, 1, 1, tzinfo=timezone.utc)
     periods = [  # (heading, commits, years spanned)
-        (f"Before AI<br><sub>{first.year}–{AI_ERA - 1}</sub>", [c for c in commits if c.date < era],
-         (era - first).days / 365.25),
-        (f"After AI<br><sub>{AI_ERA}–{now.year}</sub>", [c for c in commits if c.date >= era],
-         (now - era).days / 365.25),
+        (f"Before AI ({first.year}–{AI_ERA - 1})", [c for c in commits if c.date < era], (era - first).days / 365.25),
+        (f"After AI ({AI_ERA}–{now.year})", [c for c in commits if c.date >= era], (now - era).days / 365.25),
         ("All time", commits, (now - first).days / 365.25),
     ]
 
     def counted(group):
         return [c for c in group if c.lines and sum(c.lines) <= BULK_LINES]
+
+    def lines(group):
+        added, removed = (compact(sum(c.lines[i] for c in counted(group))) for i in (0, 1))
+        return f"+{added} / −{removed}"
 
     def ai_share(group):
         ai = sum(1 for c in group if c.ai)
@@ -342,12 +341,10 @@ def git_section():
     rows = {
         "Commits": lambda group, years: f"{len(group):,}",
         "Commits a year": lambda group, years: f"{len(group) / years:,.0f}",
-        "Lines added": lambda group, years: f"{sum(c.lines[0] for c in counted(group)):,}",
-        "Lines removed": lambda group, years: f"{sum(c.lines[1] for c in counted(group)):,}",
-        "Lines changed per commit (median)": lambda group, years: (
+        "Lines added / removed": lambda group, years: lines(group),
+        "Median lines changed per commit": lambda group, years: (
             f"{statistics.median(sum(c.lines) for c in group if c.lines):,.0f}"
         ),
-        "Repositories": lambda group, years: f"{len({c.repo for c in group}):,}",
         "With an AI co-author": lambda group, years: ai_share(group),
     }
     table = [
@@ -360,58 +357,90 @@ def git_section():
     ]
 
     repos = {c.repo: c.private for c in commits}
+    private = sum(repos.values())
     bulk = len(commits) - len(counted(commits))
     tools = {tool: sum(1 for c in commits if tool in c.ai) for tool in AI_TOOLS}
     tools = ", ".join(f"{tool} {n:,}" for tool, n in sorted(tools.items(), key=lambda kv: -kv[1]) if n)
     notes = (
-        f"Commits I authored on the default branches of {len(repos)} repositories "
-        f"({sum(repos.values())} of them private), not counting merges. Line totals leave out "
-        f"{bulk} commits that change over {BULK_LINES:,} lines each, which are nearly all datasets, "
-        f"experiment output or vendored code. The AI row counts commits with a `Co-authored-by` trailer "
-        f"naming an AI tool ({tools or 'none yet'}); AI help without one doesn't show up."
+        f"Non-merge commits on the default branches of {len(repos)} repositories"
+        + (f" ({private} private)" if private else "")
+        + f". Line totals skip {bulk} commits of over {BULK_LINES:,} lines, mostly data. AI co-authors are "
+        f"`Co-authored-by` trailers naming an AI tool ({tools or 'none yet'}), so uncredited AI help isn't "
+        f"counted. [Refreshed daily](https://github.com/{USER}/{USER}/blob/main/scripts/update_readme.py)."
     )
 
-    per_year = [
-        "| Year | Commits | With an AI co-author | Lines added | Lines removed |",
-        "| --: | --: | --: | --: | --: |",
-        *(
-            f"| {year} | {len(group):,} | {sum(1 for c in group if c.ai):,} "
-            f"| {sum(c.lines[0] for c in counted(group)):,} | {sum(c.lines[1] for c in counted(group)):,} |"
-            for year, group in by_year.items()
-        ),
-    ]
-
+    by_year = {year: [c for c in commits if c.date.year == year] for year in range(first.year, now.year + 1)}
     totals = {year: (len(group), sum(1 for c in group if c.ai)) for year, group in by_year.items()}
-    write_if_changed(CHART, chart(totals))
-    return "\n".join([
-        f"![Column chart of my commits per year, split into before and after AI, with the commits that have "
-        f"an AI co-author stacked on top; the table below has the numbers]({RAW}/{CHART.name})",
-        "",
-        *table,
-        "",
-        f"<sub>{notes}</sub>",
-        "",
-        "<details><summary>By year</summary>",
-        "",
-        *per_year,
-        "",
-        "</details>",
-    ])
+    write_if_changed(COMMITS_CHART, commits_chart(totals))
+    return "\n".join([*table, "", f"<sub>{notes}</sub>"])
 
 
-# Chart
+# Figures
 
 # The README can be viewed on a light or dark page, and GitHub can't be relied
 # on to pick an image per theme, so these colours work on both. They match the
 # Project Euler grid's.
-COMMITS = "#2a78d6"
-AI = "#d95926"
+BLUE = "#2a78d6"
+ORANGE = "#d95926"
 INK = "#7d7b76"
-RULE = "#898781"  # drawn at 50% opacity
-WIDTH, HEIGHT = 746, 220
-LEFT = 32  # lines up with the Project Euler grid, which keeps this for its row labels
-PLOT_TOP, PLOT_BOTTOM = 72, 196  # the tallest column reaches PLOT_TOP
-BAR, GAP, RADIUS = 24, 2, 4
+GREY = "#898781"  # drawn faint, for empty squares and rules
+# The figures share a size, which fits two side by side in the README on a
+# desktop screen and stacks them on narrower ones.
+WIDTH, HEIGHT = 412, 200
+
+
+def svg_start(title, height=HEIGHT):
+    """The opening of a figure, with the styles both share."""
+    return [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{WIDTH}" height="{height}" '
+        f'viewBox="0 0 {WIDTH} {height}" role="img">',
+        f"<title>{title}</title>",
+        "<style>",
+        f"text {{ font: 11px system-ui, -apple-system, 'Segoe UI', sans-serif; fill: {INK} }}",
+        ".head { font-size: 12px; font-weight: 600 }",
+        ".num { text-anchor: middle; font-variant-numeric: tabular-nums }",
+        f"rect {{ fill: {GREY}; fill-opacity: 0.2 }}",
+        f".blue {{ fill: {BLUE}; fill-opacity: 1 }}",
+        f".orange {{ fill: {ORANGE}; fill-opacity: 1 }}",
+        f"line {{ stroke: {GREY}; stroke-opacity: 0.5 }}",
+        "</style>",
+    ]
+
+
+def key(x, colour, label):
+    """A square of `colour` and its label, along a figure's top."""
+    return [
+        f'<rect class="{colour}" x="{x}" y="4" width="12" height="12" rx="2"/>',
+        f'<text class="head" x="{x + 18}" y="15">{label}</text>',
+    ]
+
+
+EULER_COLUMNS = 50  # as on the Project Euler archive's pages, and in my full grid
+CELL, CELL_GAP = 6, 2
+GROUP_GAP = 3  # extra space after every 10 columns, to make counting easier
+GRID_TOP = 26
+
+
+def euler_chart(solved, total):
+    """Every Project Euler problem as a square, filled in if I've solved it."""
+    pitch = CELL + CELL_GAP
+    rows = -(-total // EULER_COLUMNS)
+    height = max(HEIGHT, GRID_TOP + rows * pitch - CELL_GAP)
+    svg = svg_start(f"Project Euler: {len(solved)} of {total:,} problems solved", height)
+    svg += key(0, "blue", f"{len(solved)} of {total:,} Project Euler problems solved")
+    for n in range(1, total + 1):
+        row, col = divmod(n - 1, EULER_COLUMNS)
+        fill = ' class="blue"' if n in solved else ""
+        svg.append(
+            f'<rect{fill} x="{col * pitch + col // 10 * GROUP_GAP}" y="{GRID_TOP + row * pitch}" '
+            f'width="{CELL}" height="{CELL}" rx="1"/>'
+        )
+    svg.append("</svg>")
+    return "\n".join(svg) + "\n"
+
+
+PLOT_TOP, PLOT_BOTTOM = 66, 178  # the tallest column reaches PLOT_TOP
+BAR, BAR_GAP, RADIUS = 22, 2, 4
 
 
 def column(x, bottom, height, rounded):
@@ -424,49 +453,34 @@ def column(x, bottom, height, rounded):
     )
 
 
-def chart(totals):
+def commits_chart(totals):
     """Commits per year as columns, each topped by the part with an AI co-author."""
     years = list(totals)
-    slot = (WIDTH - LEFT) / len(years)
+    slot = WIDTH / len(years)
     scale = (PLOT_BOTTOM - PLOT_TOP) / max(total for total, _ in totals.values())
-    split = LEFT + slot * sum(1 for year in years if year < AI_ERA)  # x of the before/after divide
-
-    svg = [
-        f'<svg xmlns="http://www.w3.org/2000/svg" width="{WIDTH}" height="{HEIGHT}" '
-        f'viewBox="0 0 {WIDTH} {HEIGHT}" role="img">',
-        "<title>Commits per year, before and after AI</title>",
-        "<style>",
-        f"text {{ font: 11px system-ui, -apple-system, 'Segoe UI', sans-serif; fill: {INK} }}",
-        ".head { font-size: 13px; font-weight: 600 }",
-        ".num { text-anchor: middle; font-variant-numeric: tabular-nums }",
-        f".commits {{ fill: {COMMITS} }}",
-        f".ai {{ fill: {AI} }}",
-        f"line {{ stroke: {RULE}; stroke-opacity: 0.5 }}",
-        "</style>",
-        # The legend doubles as the chart's heading.
-        f'<rect class="commits" x="{LEFT}" y="5" width="12" height="12" rx="2"/>',
-        f'<text class="head" x="{LEFT + 18}" y="16">Commits</text>',
-        f'<rect class="ai" x="{LEFT + 92}" y="5" width="12" height="12" rx="2"/>',
-        f'<text class="head" x="{LEFT + 110}" y="16">with an AI co-author</text>',
-        f'<text class="head" x="{(LEFT + split) / 2:.1f}" y="42" text-anchor="middle">Before AI</text>',
-        f'<text class="head" x="{(split + WIDTH) / 2:.1f}" y="42" text-anchor="middle">After AI</text>',
+    split = slot * sum(1 for year in years if year < AI_ERA)  # x of the before/after divide
+    svg = svg_start("Commits per year, before and after AI")
+    svg += key(0, "blue", "Commits") + key(84, "orange", "with an AI co-author")
+    svg += [
+        f'<text class="head" x="{split / 2:.1f}" y="40" text-anchor="middle">Before AI</text>',
+        f'<text class="head" x="{(split + WIDTH) / 2:.1f}" y="40" text-anchor="middle">After AI</text>',
         f'<line x1="{split:.1f}" y1="28" x2="{split:.1f}" y2="{PLOT_BOTTOM}"/>',
-        f'<line x1="{LEFT}" y1="{PLOT_BOTTOM + 0.5}" x2="{WIDTH}" y2="{PLOT_BOTTOM + 0.5}"/>',
+        f'<line x1="0" y1="{PLOT_BOTTOM + 0.5}" x2="{WIDTH}" y2="{PLOT_BOTTOM + 0.5}"/>',
     ]
     for i, year in enumerate(years):
         total, ai = totals[year]
-        x = round(LEFT + slot * i + (slot - BAR) / 2)
+        x = round(slot * i + (slot - BAR) / 2)
         centre = x + BAR / 2
         # Keep the smallest non-zero segment visible.
         human, assisted = [max(n * scale, 2) if n else 0 for n in (total - ai, ai)]
         if human:
-            svg.append(f'<path class="commits" d="{column(x, PLOT_BOTTOM, human, not assisted)}"/>')
+            svg.append(f'<path class="blue" d="{column(x, PLOT_BOTTOM, human, not assisted)}"/>')
         if assisted:
-            bottom = PLOT_BOTTOM - human - (GAP if human else 0)
-            svg.append(f'<path class="ai" d="{column(x, bottom, assisted, True)}"/>')
-        top = PLOT_BOTTOM - human - assisted - (GAP if human and assisted else 0)
-        svg.append(f'<text class="num" x="{centre:.1f}" y="{top - 6:.1f}">{total:,}</text>')
-        svg.append(f'<text class="num" x="{centre:.1f}" y="{PLOT_BOTTOM + 17}">{year}</text>')
+            bottom = PLOT_BOTTOM - human - (BAR_GAP if human else 0)
+            svg.append(f'<path class="orange" d="{column(x, bottom, assisted, True)}"/>')
+        top = PLOT_BOTTOM - human - assisted - (BAR_GAP if human and assisted else 0)
+        svg.append(f'<text class="num" x="{centre:.1f}" y="{top - 5:.1f}">{total:,}</text>')
+        svg.append(f'<text class="num" x="{centre:.1f}" y="{PLOT_BOTTOM + 16}">{year}</text>')
     svg.append("</svg>")
     return "\n".join(svg) + "\n"
 
@@ -481,7 +495,7 @@ def main():
     sections = {"crates": crates_section, "mods": mods_section, "practice": practice_section, "git": git_section}
     failed = []
     for name, build in sections.items():
-        marked = re.compile(rf"(<!-- {name} -->\n).*?(<!-- /{name} -->)", re.DOTALL)
+        marked = re.compile(rf"(<!-- {name} -->)(.*?)(<!-- /{name} -->)", re.DOTALL)
         if not marked.search(readme):
             sys.exit(f"update_readme: README.md has no {name} section")
         try:
@@ -490,7 +504,8 @@ def main():
             print(f"update_readme: couldn't update {name}: {error}", file=sys.stderr)
             failed.append(name)
             continue
-        readme = marked.sub(lambda match: match[1] + body + "\n" + match[2], readme)
+        # A section on lines of its own stays that way, and one within a line stays inline.
+        readme = marked.sub(lambda m: m[1] + (f"\n{body}\n" if m[2].startswith("\n") else body) + m[3], readme)
         print(f"update_readme: updated {name}")
     write_if_changed(README, readme)
     if failed:
