@@ -13,42 +13,39 @@ line { stroke: #898781; stroke-opacity: 0.5 }
 <text class="head" x="18" y="15">Commits</text>
 <rect class="orange" x="84" y="4" width="12" height="12" rx="2"/>
 <text class="head" x="102" y="15">with an AI co-author</text>
-<text class="head" x="149.8" y="40" text-anchor="middle">Before AI</text>
-<text class="head" x="355.8" y="40" text-anchor="middle">After AI</text>
-<line x1="299.6" y1="28" x2="299.6" y2="178"/>
+<text class="head" x="144.2" y="40" text-anchor="middle">Before AI</text>
+<text class="head" x="350.2" y="40" text-anchor="middle">After AI</text>
+<line x1="288.4" y1="28" x2="288.4" y2="178"/>
 <line x1="0" y1="178.5" x2="412" y2="178.5"/>
-<path class="blue" d="M8,178.0V178.0Q8,176.0 10.0,176.0H28.0Q30,176.0 30,178.0V178.0Z"/>
-<text class="num" x="19.0" y="171.0" text-anchor="middle">11</text>
-<text class="num" x="19.0" y="194" text-anchor="middle">2016</text>
-<path class="blue" d="M45,178.0V165.7Q45,161.7 49.0,161.7H63.0Q67,161.7 67,165.7V178.0Z"/>
-<text class="num" x="56.0" y="156.7" text-anchor="middle">106</text>
-<text class="num" x="56.0" y="194" text-anchor="middle">2017</text>
-<path class="blue" d="M83,178.0V172.0Q83,168.0 87.0,168.0H101.0Q105,168.0 105,172.0V178.0Z"/>
-<text class="num" x="94.0" y="163.0" text-anchor="middle">65</text>
-<text class="num" x="94.0" y="194" text-anchor="middle">2018</text>
-<path class="blue" d="M120,178.0V171.4Q120,167.4 124.0,167.4H138.0Q142,167.4 142,171.4V178.0Z"/>
-<text class="num" x="131.0" y="162.4" text-anchor="middle">69</text>
-<text class="num" x="131.0" y="194" text-anchor="middle">2019</text>
-<path class="blue" d="M158,178.0V109.8Q158,105.8 162.0,105.8H176.0Q180,105.8 180,109.8V178.0Z"/>
-<text class="num" x="169.0" y="100.8" text-anchor="middle">470</text>
-<text class="num" x="169.0" y="194" text-anchor="middle">2020</text>
-<path class="blue" d="M195,178.0V106.9Q195,102.9 199.0,102.9H213.0Q217,102.9 217,106.9V178.0Z"/>
-<text class="num" x="206.0" y="97.9" text-anchor="middle">489</text>
-<text class="num" x="206.0" y="194" text-anchor="middle">2021</text>
-<path class="blue" d="M232,178.0V121.6Q232,117.6 236.0,117.6H250.0Q254,117.6 254,121.6V178.0Z"/>
-<text class="num" x="243.0" y="112.6" text-anchor="middle">393</text>
-<text class="num" x="243.0" y="194" text-anchor="middle">2022</text>
-<path class="blue" d="M270,178.0V70.0Q270,66.0 274.0,66.0H288.0Q292,66.0 292,70.0V178.0Z"/>
-<text class="num" x="281.0" y="61.0" text-anchor="middle">729</text>
-<text class="num" x="281.0" y="194" text-anchor="middle">2023</text>
-<path class="blue" d="M307,178.0V100.7Q307,96.7 311.0,96.7H325.0Q329,96.7 329,100.7V178.0Z"/>
-<text class="num" x="318.0" y="91.7" text-anchor="middle">529</text>
-<text class="num" x="318.0" y="194" text-anchor="middle">2024</text>
-<path class="blue" d="M345,178.0V116.7Q345,112.7 349.0,112.7H363.0Q367,112.7 367,116.7V178.0Z"/>
-<text class="num" x="356.0" y="107.7" text-anchor="middle">425</text>
-<text class="num" x="356.0" y="194" text-anchor="middle">2025</text>
-<path class="blue" d="M382,178.0V135.4Q382,135.4 382.0,135.4H404.0Q404,135.4 404,135.4V178.0Z"/>
-<path class="orange" d="M382,133.4V97.7Q382,93.7 386.0,93.7H400.0Q404,93.7 404,97.7V133.4Z"/>
-<text class="num" x="393.0" y="88.7" text-anchor="middle">536</text>
-<text class="num" x="393.0" y="194" text-anchor="middle">2026</text>
+<path class="blue" d="M10,178.0V176.8Q10,172.8 14.0,172.8H28.0Q32,172.8 32,176.8V178.0Z"/>
+<text class="num" x="21.0" y="167.8" text-anchor="middle">30</text>
+<text class="num" x="21.0" y="194" text-anchor="middle">2017</text>
+<path class="blue" d="M51,178.0V175.7Q51,171.7 55.0,171.7H69.0Q73,171.7 73,175.7V178.0Z"/>
+<text class="num" x="62.0" y="166.7" text-anchor="middle">36</text>
+<text class="num" x="62.0" y="194" text-anchor="middle">2018</text>
+<path class="blue" d="M92,178.0V169.9Q92,165.9 96.0,165.9H110.0Q114,165.9 114,169.9V178.0Z"/>
+<text class="num" x="103.0" y="160.9" text-anchor="middle">69</text>
+<text class="num" x="103.0" y="194" text-anchor="middle">2019</text>
+<path class="blue" d="M133,178.0V103.6Q133,99.6 137.0,99.6H151.0Q155,99.6 155,103.6V178.0Z"/>
+<text class="num" x="144.0" y="94.6" text-anchor="middle">448</text>
+<text class="num" x="144.0" y="194" text-anchor="middle">2020</text>
+<path class="blue" d="M174,178.0V128.6Q174,124.6 178.0,124.6H192.0Q196,124.6 196,128.6V178.0Z"/>
+<text class="num" x="185.0" y="119.6" text-anchor="middle">305</text>
+<text class="num" x="185.0" y="194" text-anchor="middle">2021</text>
+<path class="blue" d="M216,178.0V121.1Q216,117.1 220.0,117.1H234.0Q238,117.1 238,121.1V178.0Z"/>
+<text class="num" x="227.0" y="112.1" text-anchor="middle">348</text>
+<text class="num" x="227.0" y="194" text-anchor="middle">2022</text>
+<path class="blue" d="M257,178.0V70.0Q257,66.0 261.0,66.0H275.0Q279,66.0 279,70.0V178.0Z"/>
+<text class="num" x="268.0" y="61.0" text-anchor="middle">640</text>
+<text class="num" x="268.0" y="194" text-anchor="middle">2023</text>
+<path class="blue" d="M298,178.0V118.7Q298,114.7 302.0,114.7H316.0Q320,114.7 320,118.7V178.0Z"/>
+<text class="num" x="309.0" y="109.7" text-anchor="middle">362</text>
+<text class="num" x="309.0" y="194" text-anchor="middle">2024</text>
+<path class="blue" d="M339,178.0V151.2Q339,147.2 343.0,147.2H357.0Q361,147.2 361,151.2V178.0Z"/>
+<text class="num" x="350.0" y="142.2" text-anchor="middle">176</text>
+<text class="num" x="350.0" y="194" text-anchor="middle">2025</text>
+<path class="blue" d="M380,178.0V151.1Q380,151.1 380.0,151.1H402.0Q402,151.1 402,151.1V178.0Z"/>
+<path class="orange" d="M380,149.1V130.8Q380,126.8 384.0,126.8H398.0Q402,126.8 402,130.8V149.1Z"/>
+<text class="num" x="391.0" y="121.8" text-anchor="middle">281</text>
+<text class="num" x="391.0" y="194" text-anchor="middle">2026</text>
 </svg>
