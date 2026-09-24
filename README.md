@@ -9,13 +9,7 @@ I lean towards systems programming and like optimising things. I'm a Physics PhD
 [![Grid of every Project Euler problem, with the ones I've solved filled in](https://raw.githubusercontent.com/JonathanWoollett-Light/JonathanWoollett-Light/main/euler.svg)](https://github.com/JonathanWoollett-Light/project_euler) ![Column chart of my commits per year, before and after AI, with those that have an AI co-author stacked on top](https://raw.githubusercontent.com/JonathanWoollett-Light/JonathanWoollett-Light/main/commits.svg)
 
 <!-- git -->
-| | Before AI (2016–2023) | After AI (2024–2026) | All time |
-| :-- | --: | --: | --: |
-| Commits | 2,332 | 1,490 | 3,822 |
-| Commits a year | 333 | 546 | 393 |
-| Lines added / removed | +362k / −199k | +433k / −169k | +795k / −369k |
-| Median lines changed per commit | 24 | 91 | 41 |
-| With an AI co-author | 0 | 259 (17%) | 259 (7%) |
+![My commits before and after AI. Commits: 2,332 before, 1,490 after; Commits a year: 333 before, 546 after; Lines added: 362k before, 433k after; Lines removed: 199k before, 169k after; Median lines changed per commit: 24 before, 91 after; With an AI co-author: 0 before, 259 (17%) after](https://raw.githubusercontent.com/JonathanWoollett-Light/JonathanWoollett-Light/main/before-after.svg)
 
-<sub>Non-merge commits on the default branches of 152 repositories (27 private). Line totals skip 55 commits of over 10,000 lines, mostly data. AI co-authors are `Co-authored-by` trailers naming an AI tool (Claude 259), so uncredited AI help isn't counted. [Refreshed daily](https://github.com/JonathanWoollett-Light/JonathanWoollett-Light/blob/main/scripts/update_readme.py).</sub>
+<sub>3,822 commits in all: the non-merge ones on the default branches of 152 repositories (27 private). Line totals skip 55 commits of over 10,000 lines, mostly data. AI co-authors are Co-authored-by trailers naming an AI tool (Claude 259), so uncredited AI help isn't counted. [Refreshed daily](https://github.com/JonathanWoollett-Light/JonathanWoollett-Light/blob/main/scripts/update_readme.py).</sub>
 <!-- /git -->

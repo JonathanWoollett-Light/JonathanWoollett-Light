@@ -3,7 +3,7 @@
 <style>
 text { font: 11px system-ui, -apple-system, 'Segoe UI', sans-serif; fill: #7d7b76 }
 .head { font-size: 12px; font-weight: 600 }
-.num { text-anchor: middle; font-variant-numeric: tabular-nums }
+.num { font-variant-numeric: tabular-nums }
 rect { fill: #898781; fill-opacity: 0.2 }
 .blue { fill: #2a78d6; fill-opacity: 1 }
 .orange { fill: #d95926; fill-opacity: 1 }
@@ -18,37 +18,37 @@ line { stroke: #898781; stroke-opacity: 0.5 }
 <line x1="299.6" y1="28" x2="299.6" y2="178"/>
 <line x1="0" y1="178.5" x2="412" y2="178.5"/>
 <path class="blue" d="M8,178.0V178.0Q8,176.0 10.0,176.0H28.0Q30,176.0 30,178.0V178.0Z"/>
-<text class="num" x="19.0" y="171.0">11</text>
-<text class="num" x="19.0" y="194">2016</text>
+<text class="num" x="19.0" y="171.0" text-anchor="middle">11</text>
+<text class="num" x="19.0" y="194" text-anchor="middle">2016</text>
 <path class="blue" d="M45,178.0V165.7Q45,161.7 49.0,161.7H63.0Q67,161.7 67,165.7V178.0Z"/>
-<text class="num" x="56.0" y="156.7">106</text>
-<text class="num" x="56.0" y="194">2017</text>
+<text class="num" x="56.0" y="156.7" text-anchor="middle">106</text>
+<text class="num" x="56.0" y="194" text-anchor="middle">2017</text>
 <path class="blue" d="M83,178.0V172.0Q83,168.0 87.0,168.0H101.0Q105,168.0 105,172.0V178.0Z"/>
-<text class="num" x="94.0" y="163.0">65</text>
-<text class="num" x="94.0" y="194">2018</text>
+<text class="num" x="94.0" y="163.0" text-anchor="middle">65</text>
+<text class="num" x="94.0" y="194" text-anchor="middle">2018</text>
 <path class="blue" d="M120,178.0V171.4Q120,167.4 124.0,167.4H138.0Q142,167.4 142,171.4V178.0Z"/>
-<text class="num" x="131.0" y="162.4">69</text>
-<text class="num" x="131.0" y="194">2019</text>
+<text class="num" x="131.0" y="162.4" text-anchor="middle">69</text>
+<text class="num" x="131.0" y="194" text-anchor="middle">2019</text>
 <path class="blue" d="M158,178.0V109.8Q158,105.8 162.0,105.8H176.0Q180,105.8 180,109.8V178.0Z"/>
-<text class="num" x="169.0" y="100.8">470</text>
-<text class="num" x="169.0" y="194">2020</text>
+<text class="num" x="169.0" y="100.8" text-anchor="middle">470</text>
+<text class="num" x="169.0" y="194" text-anchor="middle">2020</text>
 <path class="blue" d="M195,178.0V106.9Q195,102.9 199.0,102.9H213.0Q217,102.9 217,106.9V178.0Z"/>
-<text class="num" x="206.0" y="97.9">489</text>
-<text class="num" x="206.0" y="194">2021</text>
+<text class="num" x="206.0" y="97.9" text-anchor="middle">489</text>
+<text class="num" x="206.0" y="194" text-anchor="middle">2021</text>
 <path class="blue" d="M232,178.0V121.6Q232,117.6 236.0,117.6H250.0Q254,117.6 254,121.6V178.0Z"/>
-<text class="num" x="243.0" y="112.6">393</text>
-<text class="num" x="243.0" y="194">2022</text>
+<text class="num" x="243.0" y="112.6" text-anchor="middle">393</text>
+<text class="num" x="243.0" y="194" text-anchor="middle">2022</text>
 <path class="blue" d="M270,178.0V70.0Q270,66.0 274.0,66.0H288.0Q292,66.0 292,70.0V178.0Z"/>
-<text class="num" x="281.0" y="61.0">729</text>
-<text class="num" x="281.0" y="194">2023</text>
+<text class="num" x="281.0" y="61.0" text-anchor="middle">729</text>
+<text class="num" x="281.0" y="194" text-anchor="middle">2023</text>
 <path class="blue" d="M307,178.0V100.7Q307,96.7 311.0,96.7H325.0Q329,96.7 329,100.7V178.0Z"/>
-<text class="num" x="318.0" y="91.7">529</text>
-<text class="num" x="318.0" y="194">2024</text>
+<text class="num" x="318.0" y="91.7" text-anchor="middle">529</text>
+<text class="num" x="318.0" y="194" text-anchor="middle">2024</text>
 <path class="blue" d="M345,178.0V116.7Q345,112.7 349.0,112.7H363.0Q367,112.7 367,116.7V178.0Z"/>
-<text class="num" x="356.0" y="107.7">425</text>
-<text class="num" x="356.0" y="194">2025</text>
+<text class="num" x="356.0" y="107.7" text-anchor="middle">425</text>
+<text class="num" x="356.0" y="194" text-anchor="middle">2025</text>
 <path class="blue" d="M382,178.0V135.4Q382,135.4 382.0,135.4H404.0Q404,135.4 404,135.4V178.0Z"/>
 <path class="orange" d="M382,133.4V97.7Q382,93.7 386.0,93.7H400.0Q404,93.7 404,97.7V133.4Z"/>
-<text class="num" x="393.0" y="88.7">536</text>
-<text class="num" x="393.0" y="194">2026</text>
+<text class="num" x="393.0" y="88.7" text-anchor="middle">536</text>
+<text class="num" x="393.0" y="194" text-anchor="middle">2026</text>
 </svg>

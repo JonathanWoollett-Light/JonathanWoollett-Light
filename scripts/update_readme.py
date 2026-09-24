@@ -1,4 +1,4 @@
-"""Refresh the generated parts of README.md and the two figures in it.
+"""Refresh the generated parts of README.md and the figures in it.
 
 README.md is hand-written apart from the text between `<!-- name -->` and
 `<!-- /name -->` markers, which this rewrites from live data:
@@ -6,7 +6,8 @@ README.md is hand-written apart from the text between `<!-- name -->` and
     crates    downloads of my crates, from crates.io
     mods      downloads of my Hearts of Iron IV mods, from the Steam Workshop
     practice  problems I've solved on Project Euler and NeetCode, drawn in euler.svg
-    git       my commits before and after AI, from GitHub, charted in commits.svg
+    git       my commits before and after AI, from GitHub, charted by year in
+              commits.svg and side by side in before-after.svg
 
 A section whose source can't be reached is left as it was, and the script exits
 non-zero once the rest are written.
@@ -38,9 +39,12 @@ ROOT = Path(__file__).resolve().parent.parent
 README = ROOT / "README.md"
 EULER_CHART = ROOT / "euler.svg"
 COMMITS_CHART = ROOT / "commits.svg"
+COMPARISON_CHART = ROOT / "before-after.svg"
 
 USER = "JonathanWoollett-Light"
 USER_AGENT = f"{USER} profile README (https://github.com/{USER}/{USER})"
+# Where GitHub serves this repository's files, and so the figures, from.
+RAW = f"https://raw.githubusercontent.com/{USER}/{USER}/main"
 
 CRATES_USER_ID = 79784  # https://crates.io/users/JonathanWoollett-Light
 # Crates from these organisations are team efforts I helped maintain, not mine alone.
@@ -316,45 +320,40 @@ def my_commits():
         return list({oid: commit for batch in found for oid, commit in batch.items()}.values())
 
 
+AI_ROW = "With an AI co-author"  # the comparison's row drawn in the AI colour
+
+
 def git_section():
     commits = my_commits()
     now = datetime.now(timezone.utc)
     first = min(c.date for c in commits)
     era = datetime(AI_ERA, 1, 1, tzinfo=timezone.utc)
-    periods = [  # (heading, commits, years spanned)
-        (f"Before AI ({first.year}–{AI_ERA - 1})", [c for c in commits if c.date < era], (era - first).days / 365.25),
-        (f"After AI ({AI_ERA}–{now.year})", [c for c in commits if c.date >= era], (now - era).days / 365.25),
-        ("All time", commits, (now - first).days / 365.25),
-    ]
 
     def counted(group):
         return [c for c in group if c.lines and sum(c.lines) <= BULK_LINES]
 
-    def lines(group):
-        added, removed = (compact(sum(c.lines[i] for c in counted(group))) for i in (0, 1))
-        return f"+{added} / −{removed}"
-
-    def ai_share(group):
+    def summary(group, years):
+        """Each compared measure of `group`, which spans `years`, as its value and how to show it."""
+        added, removed = (sum(c.lines[i] for c in counted(group)) for i in (0, 1))
+        median = statistics.median(sum(c.lines) for c in group if c.lines)
         ai = sum(1 for c in group if c.ai)
-        return f"{ai:,} ({ai / len(group):.0%})" if ai else "0"
+        return {
+            "Commits": (len(group), f"{len(group):,}"),
+            "Commits a year": (len(group) / years, f"{len(group) / years:,.0f}"),
+            "Lines added": (added, compact(added)),
+            "Lines removed": (removed, compact(removed)),
+            "Median lines changed per commit": (median, f"{median:,.0f}"),
+            AI_ROW: (ai, f"{ai:,} ({ai / len(group):.0%})" if ai else "0"),
+        }
 
-    rows = {
-        "Commits": lambda group, years: f"{len(group):,}",
-        "Commits a year": lambda group, years: f"{len(group) / years:,.0f}",
-        "Lines added / removed": lambda group, years: lines(group),
-        "Median lines changed per commit": lambda group, years: (
-            f"{statistics.median(sum(c.lines) for c in group if c.lines):,.0f}"
-        ),
-        "With an AI co-author": lambda group, years: ai_share(group),
-    }
-    table = [
-        "| | " + " | ".join(heading for heading, _, _ in periods) + " |",
-        "| :-- |" + " --: |" * len(periods),
-        *(
-            f"| {label} | " + " | ".join(row(group, years) for _, group, years in periods) + " |"
-            for label, row in rows.items()
-        ),
-    ]
+    before = summary([c for c in commits if c.date < era], (era - first).days / 365.25)
+    after = summary([c for c in commits if c.date >= era], (now - era).days / 365.25)
+    headings = (f"Before AI ({first.year}–{AI_ERA - 1})", f"After AI ({AI_ERA}–{now.year})")
+    write_if_changed(COMPARISON_CHART, comparison_chart(headings, before, after))
+
+    by_year = {year: [c for c in commits if c.date.year == year] for year in range(first.year, now.year + 1)}
+    totals = {year: (len(group), sum(1 for c in group if c.ai)) for year, group in by_year.items()}
+    write_if_changed(COMMITS_CHART, commits_chart(totals))
 
     repos = {c.repo: c.private for c in commits}
     private = sum(repos.values())
@@ -362,17 +361,15 @@ def git_section():
     tools = {tool: sum(1 for c in commits if tool in c.ai) for tool in AI_TOOLS}
     tools = ", ".join(f"{tool} {n:,}" for tool, n in sorted(tools.items(), key=lambda kv: -kv[1]) if n)
     notes = (
-        f"Non-merge commits on the default branches of {len(repos)} repositories"
-        + (f" ({private} private)" if private else "")
-        + f". Line totals skip {bulk} commits of over {BULK_LINES:,} lines, mostly data. AI co-authors are "
-        f"`Co-authored-by` trailers naming an AI tool ({tools or 'none yet'}), so uncredited AI help isn't "
-        f"counted. [Refreshed daily](https://github.com/{USER}/{USER}/blob/main/scripts/update_readme.py)."
+        f"{len(commits):,} commits in all: the non-merge ones on the default branches of {len(repos)} "
+        f"repositories" + (f" ({private} private)" if private else "") + f". Line totals skip {bulk} commits "
+        f"of over {BULK_LINES:,} lines, mostly data. AI co-authors are Co-authored-by trailers naming an AI "
+        f"tool ({tools or 'none yet'}), so uncredited AI help isn't counted. "
+        f"[Refreshed daily](https://github.com/{USER}/{USER}/blob/main/scripts/update_readme.py)."
     )
-
-    by_year = {year: [c for c in commits if c.date.year == year] for year in range(first.year, now.year + 1)}
-    totals = {year: (len(group), sum(1 for c in group if c.ai)) for year, group in by_year.items()}
-    write_if_changed(COMMITS_CHART, commits_chart(totals))
-    return "\n".join([*table, "", f"<sub>{notes}</sub>"])
+    # The image's text says what its bars show, for anyone who can't see them.
+    alt = "; ".join(f"{label}: {before[label][1]} before, {after[label][1]} after" for label in before)
+    return f"![My commits before and after AI. {alt}]({RAW}/{COMPARISON_CHART.name})\n\n<sub>{notes}</sub>"
 
 
 # Figures
@@ -384,21 +381,21 @@ BLUE = "#2a78d6"
 ORANGE = "#d95926"
 INK = "#7d7b76"
 GREY = "#898781"  # drawn faint, for empty squares and rules
-# The figures share a size, which fits two side by side in the README on a
-# desktop screen and stacks them on narrower ones.
+# The Euler grid and commits chart share a size, which fits them side by side
+# in the README on a desktop screen and stacks them on narrower ones.
 WIDTH, HEIGHT = 412, 200
 
 
-def svg_start(title, height=HEIGHT):
-    """The opening of a figure, with the styles both share."""
+def svg_start(title, width=WIDTH, height=HEIGHT):
+    """The opening of a figure, with the styles they all share."""
     return [
-        f'<svg xmlns="http://www.w3.org/2000/svg" width="{WIDTH}" height="{height}" '
-        f'viewBox="0 0 {WIDTH} {height}" role="img">',
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
+        f'viewBox="0 0 {width} {height}" role="img">',
         f"<title>{title}</title>",
         "<style>",
         f"text {{ font: 11px system-ui, -apple-system, 'Segoe UI', sans-serif; fill: {INK} }}",
         ".head { font-size: 12px; font-weight: 600 }",
-        ".num { text-anchor: middle; font-variant-numeric: tabular-nums }",
+        ".num { font-variant-numeric: tabular-nums }",
         f"rect {{ fill: {GREY}; fill-opacity: 0.2 }}",
         f".blue {{ fill: {BLUE}; fill-opacity: 1 }}",
         f".orange {{ fill: {ORANGE}; fill-opacity: 1 }}",
@@ -426,7 +423,7 @@ def euler_chart(solved, total):
     pitch = CELL + CELL_GAP
     rows = -(-total // EULER_COLUMNS)
     height = max(HEIGHT, GRID_TOP + rows * pitch - CELL_GAP)
-    svg = svg_start(f"Project Euler: {len(solved)} of {total:,} problems solved", height)
+    svg = svg_start(f"Project Euler: {len(solved)} of {total:,} problems solved", height=height)
     svg += key(0, "blue", f"{len(solved)} of {total:,} Project Euler problems solved")
     for n in range(1, total + 1):
         row, col = divmod(n - 1, EULER_COLUMNS)
@@ -479,8 +476,60 @@ def commits_chart(totals):
             bottom = PLOT_BOTTOM - human - (BAR_GAP if human else 0)
             svg.append(f'<path class="orange" d="{column(x, bottom, assisted, True)}"/>')
         top = PLOT_BOTTOM - human - assisted - (BAR_GAP if human and assisted else 0)
-        svg.append(f'<text class="num" x="{centre:.1f}" y="{top - 5:.1f}">{total:,}</text>')
-        svg.append(f'<text class="num" x="{centre:.1f}" y="{PLOT_BOTTOM + 16}">{year}</text>')
+        svg.append(f'<text class="num" x="{centre:.1f}" y="{top - 5:.1f}" text-anchor="middle">{total:,}</text>')
+        svg.append(f'<text class="num" x="{centre:.1f}" y="{PLOT_BOTTOM + 16}" text-anchor="middle">{year}</text>')
+    svg.append("</svg>")
+    return "\n".join(svg) + "\n"
+
+
+COMPARISON_WIDTH = 828  # the two figures above it, side by side
+LABELS_WIDTH = 200  # the middle column, naming each row
+VALUE_ROOM = 64  # beyond the longest bars, for their values
+ROWS_TOP, ROW_PITCH, ROW_BAR = 28, 24, 16
+
+
+def bar(inner, outer, y):
+    """A horizontal bar's outline, square at `inner` and rounded at `outer`."""
+    d = 1 if outer > inner else -1
+    r = min(RADIUS, abs(outer - inner))
+    bottom = y + ROW_BAR
+    return (
+        f"M{inner:.1f},{y}H{outer - d * r:.1f}Q{outer:.1f},{y} {outer:.1f},{y + r:.1f}"
+        f"V{bottom - r:.1f}Q{outer:.1f},{bottom} {outer - d * r:.1f},{bottom}H{inner:.1f}Z"
+    )
+
+
+def comparison_chart(headings, before, after):
+    """Back-to-back bars of each measure before (left) and after (right) AI.
+
+    The measures don't share a unit, so each row has its own scale, with its
+    longer bar at full length; the values printed beside them carry the rest.
+    """
+    centre = COMPARISON_WIDTH / 2
+    edges = (centre - LABELS_WIDTH / 2, centre + LABELS_WIDTH / 2)  # where each side's bars start
+    longest = edges[0] - VALUE_ROOM
+    height = ROWS_TOP + len(before) * ROW_PITCH - (ROW_PITCH - ROW_BAR)
+    svg = svg_start("My commits before and after AI", COMPARISON_WIDTH, height)
+    svg += [
+        f'<text class="head" x="{edges[0] / 2:.1f}" y="15" text-anchor="middle">{headings[0]}</text>',
+        f'<text class="head" x="{(edges[1] + COMPARISON_WIDTH) / 2:.1f}" y="15" text-anchor="middle">'
+        f"{headings[1]}</text>",
+        *(f'<line x1="{x}" y1="{ROWS_TOP - 4}" x2="{x}" y2="{height}"/>' for x in edges),
+    ]
+    for i, label in enumerate(before):
+        y = ROWS_TOP + i * ROW_PITCH
+        baseline = y + ROW_BAR / 2 + 4  # centres 11px text on the bars
+        scale = longest / (max(before[label][0], after[label][0]) or 1)
+        colour = "orange" if label == AI_ROW else "blue"
+        svg.append(f'<text x="{centre}" y="{baseline}" text-anchor="middle">{label}</text>')
+        for inner, direction, (value, shown) in zip(edges, (-1, 1), (before[label], after[label])):
+            outer = inner + direction * value * scale
+            if value:
+                svg.append(f'<path class="{colour}" d="{bar(inner, outer, y)}"/>')
+            svg.append(
+                f'<text class="num" x="{outer + direction * 6:.1f}" y="{baseline}" '
+                f'text-anchor="{"end" if direction < 0 else "start"}">{shown}</text>'
+            )
     svg.append("</svg>")
     return "\n".join(svg) + "\n"
 
