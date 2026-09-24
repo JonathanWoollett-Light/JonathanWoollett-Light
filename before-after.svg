@@ -15,12 +15,12 @@ line { stroke: #898781; stroke-opacity: 0.5 }
 <line x1="514.0" y1="24" x2="514.0" y2="164"/>
 <text x="414.0" y="40.0" text-anchor="middle">Commits</text>
 <path class="blue" d="M314.0,28H68.0Q64.0,28 64.0,32.0V40.0Q64.0,44 68.0,44H314.0Z"/>
-<text class="num" x="58.0" y="40.0" text-anchor="end">1,876</text>
-<path class="blue" d="M514.0,28H619.1Q623.1,28 623.1,32.0V40.0Q623.1,44 619.1,44H514.0Z"/>
-<text class="num" x="629.1" y="40.0" text-anchor="start">819</text>
+<text class="num" x="58.0" y="40.0" text-anchor="end">1,879</text>
+<path class="blue" d="M514.0,28H619.0Q623.0,28 623.0,32.0V40.0Q623.0,44 619.0,44H514.0Z"/>
+<text class="num" x="629.0" y="40.0" text-anchor="start">819</text>
 <text x="414.0" y="64.0" text-anchor="middle">Commits a year</text>
-<path class="blue" d="M314.0,52H69.9Q65.9,52 65.9,56.0V64.0Q65.9,68 69.9,68H314.0Z"/>
-<text class="num" x="59.9" y="64.0" text-anchor="end">298</text>
+<path class="blue" d="M314.0,52H69.5Q65.5,52 65.5,56.0V64.0Q65.5,68 69.5,68H314.0Z"/>
+<text class="num" x="59.5" y="64.0" text-anchor="end">298</text>
 <path class="blue" d="M514.0,52H760.0Q764.0,52 764.0,56.0V64.0Q764.0,68 760.0,68H514.0Z"/>
 <text class="num" x="770.0" y="64.0" text-anchor="start">300</text>
 <text x="414.0" y="88.0" text-anchor="middle">Lines added</text>
@@ -31,8 +31,8 @@ line { stroke: #898781; stroke-opacity: 0.5 }
 <text x="414.0" y="112.0" text-anchor="middle">Lines removed</text>
 <path class="blue" d="M314.0,100H68.0Q64.0,100 64.0,104.0V112.0Q64.0,116 68.0,116H314.0Z"/>
 <text class="num" x="58.0" y="112.0" text-anchor="end">127k</text>
-<path class="blue" d="M514.0,100H653.8Q657.8,100 657.8,104.0V112.0Q657.8,116 653.8,116H514.0Z"/>
-<text class="num" x="663.8" y="112.0" text-anchor="start">73k</text>
+<path class="blue" d="M514.0,100H653.7Q657.7,100 657.7,104.0V112.0Q657.7,116 653.7,116H514.0Z"/>
+<text class="num" x="663.7" y="112.0" text-anchor="start">73k</text>
 <text x="414.0" y="136.0" text-anchor="middle">Median lines changed per commit</text>
 <path class="blue" d="M314.0,124H241.1Q237.1,124 237.1,128.0V136.0Q237.1,140 241.1,140H314.0Z"/>
 <text class="num" x="231.1" y="136.0" text-anchor="end">16</text>
