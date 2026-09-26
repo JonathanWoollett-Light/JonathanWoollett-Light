@@ -16,26 +16,26 @@ line { stroke: #898781; stroke-opacity: 0.5 }
 <text x="414.0" y="40.0" text-anchor="middle">Commits</text>
 <path class="blue" d="M314.0,28H68.0Q64.0,28 64.0,32.0V40.0Q64.0,44 68.0,44H314.0Z"/>
 <text class="num" x="58.0" y="40.0" text-anchor="end">1,879</text>
-<path class="blue" d="M514.0,28H619.9Q623.9,28 623.9,32.0V40.0Q623.9,44 619.9,44H514.0Z"/>
-<text class="num" x="629.9" y="40.0" text-anchor="start">826</text>
+<path class="blue" d="M514.0,28H620.8Q624.8,28 624.8,32.0V40.0Q624.8,44 620.8,44H514.0Z"/>
+<text class="num" x="630.8" y="40.0" text-anchor="start">833</text>
 <text x="414.0" y="64.0" text-anchor="middle">Commits a year</text>
-<path class="blue" d="M314.0,52H71.3Q67.3,52 67.3,56.0V64.0Q67.3,68 71.3,68H314.0Z"/>
-<text class="num" x="61.3" y="64.0" text-anchor="end">298</text>
+<path class="blue" d="M314.0,52H73.2Q69.2,52 69.2,56.0V64.0Q69.2,68 73.2,68H314.0Z"/>
+<text class="num" x="63.2" y="64.0" text-anchor="end">298</text>
 <path class="blue" d="M514.0,52H760.0Q764.0,52 764.0,56.0V64.0Q764.0,68 760.0,68H514.0Z"/>
-<text class="num" x="770.0" y="64.0" text-anchor="start">302</text>
+<text class="num" x="770.0" y="64.0" text-anchor="start">305</text>
 <text x="414.0" y="88.0" text-anchor="middle">Lines added</text>
 <path class="blue" d="M314.0,76H68.0Q64.0,76 64.0,80.0V88.0Q64.0,92 68.0,92H314.0Z"/>
 <text class="num" x="58.0" y="88.0" text-anchor="end">246k</text>
-<path class="blue" d="M514.0,76H741.1Q745.1,76 745.1,80.0V88.0Q745.1,92 741.1,92H514.0Z"/>
-<text class="num" x="751.1" y="88.0" text-anchor="start">227k</text>
+<path class="blue" d="M514.0,76H741.2Q745.2,76 745.2,80.0V88.0Q745.2,92 741.2,92H514.0Z"/>
+<text class="num" x="751.2" y="88.0" text-anchor="start">228k</text>
 <text x="414.0" y="112.0" text-anchor="middle">Lines removed</text>
 <path class="blue" d="M314.0,100H68.0Q64.0,100 64.0,104.0V112.0Q64.0,116 68.0,116H314.0Z"/>
 <text class="num" x="58.0" y="112.0" text-anchor="end">127k</text>
 <path class="blue" d="M514.0,100H653.8Q657.8,100 657.8,104.0V112.0Q657.8,116 653.8,116H514.0Z"/>
 <text class="num" x="663.8" y="112.0" text-anchor="start">73k</text>
 <text x="414.0" y="136.0" text-anchor="middle">Median lines changed per commit</text>
-<path class="blue" d="M314.0,124H238.8Q234.8,124 234.8,128.0V136.0Q234.8,140 238.8,140H314.0Z"/>
-<text class="num" x="228.8" y="136.0" text-anchor="end">16</text>
+<path class="blue" d="M314.0,124H238.0Q234.0,124 234.0,128.0V136.0Q234.0,140 238.0,140H314.0Z"/>
+<text class="num" x="228.0" y="136.0" text-anchor="end">16</text>
 <path class="blue" d="M514.0,124H760.0Q764.0,124 764.0,128.0V136.0Q764.0,140 760.0,140H514.0Z"/>
 <text class="num" x="770.0" y="136.0" text-anchor="start">50</text>
 <text x="414.0" y="160.0" text-anchor="middle">With an AI co-author</text>

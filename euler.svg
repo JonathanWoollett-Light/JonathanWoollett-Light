@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="412" height="200" viewBox="0 0 412 200" role="img">
-<title>Project Euler: 27 of 1,010 problems solved</title>
+<title>Project Euler: 30 of 1,010 problems solved</title>
 <style>
 text { font: 11px system-ui, -apple-system, 'Segoe UI', sans-serif; fill: #7d7b76 }
 .head { font-size: 12px; font-weight: 600 }
@@ -10,7 +10,7 @@ rect { fill: #898781; fill-opacity: 0.2 }
 line { stroke: #898781; stroke-opacity: 0.5 }
 </style>
 <rect class="blue" x="0" y="4" width="12" height="12" rx="2"/>
-<text class="head" x="18" y="15">27 of 1,010 Project Euler problems solved</text>
+<text class="head" x="18" y="15">30 of 1,010 Project Euler problems solved</text>
 <rect class="blue" x="0" y="26" width="6" height="6" rx="1"/>
 <rect class="blue" x="8" y="26" width="6" height="6" rx="1"/>
 <rect class="blue" x="16" y="26" width="6" height="6" rx="1"/>
@@ -50,8 +50,8 @@ line { stroke: #898781; stroke-opacity: 0.5 }
 <rect class="blue" x="297" y="26" width="6" height="6" rx="1"/>
 <rect x="305" y="26" width="6" height="6" rx="1"/>
 <rect class="blue" x="313" y="26" width="6" height="6" rx="1"/>
-<rect x="321" y="26" width="6" height="6" rx="1"/>
-<rect x="332" y="26" width="6" height="6" rx="1"/>
+<rect class="blue" x="321" y="26" width="6" height="6" rx="1"/>
+<rect class="blue" x="332" y="26" width="6" height="6" rx="1"/>
 <rect class="blue" x="340" y="26" width="6" height="6" rx="1"/>
 <rect class="blue" x="348" y="26" width="6" height="6" rx="1"/>
 <rect x="356" y="26" width="6" height="6" rx="1"/>
@@ -69,7 +69,7 @@ line { stroke: #898781; stroke-opacity: 0.5 }
 <rect x="40" y="34" width="6" height="6" rx="1"/>
 <rect x="48" y="34" width="6" height="6" rx="1"/>
 <rect x="56" y="34" width="6" height="6" rx="1"/>
-<rect x="64" y="34" width="6" height="6" rx="1"/>
+<rect class="blue" x="64" y="34" width="6" height="6" rx="1"/>
 <rect x="72" y="34" width="6" height="6" rx="1"/>
 <rect x="83" y="34" width="6" height="6" rx="1"/>
 <rect x="91" y="34" width="6" height="6" rx="1"/>
