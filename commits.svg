@@ -44,8 +44,8 @@ line { stroke: #898781; stroke-opacity: 0.5 }
 <path class="blue" d="M339,178.0V151.3Q339,147.3 343.0,147.3H357.0Q361,147.3 361,151.3V178.0Z"/>
 <text class="num" x="350.0" y="142.3" text-anchor="middle">176</text>
 <text class="num" x="350.0" y="194" text-anchor="middle">2025</text>
-<path class="blue" d="M380,178.0V147.5Q380,147.5 380.0,147.5H402.0Q402,147.5 402,147.5V178.0Z"/>
-<path class="orange" d="M380,145.5V127.4Q380,123.4 384.0,123.4H398.0Q402,123.4 402,127.4V145.5Z"/>
-<text class="num" x="391.0" y="118.4" text-anchor="middle">302</text>
+<path class="blue" d="M380,178.0V146.6Q380,146.6 380.0,146.6H402.0Q402,146.6 402,146.6V178.0Z"/>
+<path class="orange" d="M380,144.6V126.5Q380,122.5 384.0,122.5H398.0Q402,122.5 402,126.5V144.6Z"/>
+<text class="num" x="391.0" y="117.5" text-anchor="middle">307</text>
 <text class="num" x="391.0" y="194" text-anchor="middle">2026</text>
 </svg>
