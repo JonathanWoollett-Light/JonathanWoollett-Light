@@ -16,18 +16,18 @@ line { stroke: #898781; stroke-opacity: 0.5 }
 <text x="414.0" y="40.0" text-anchor="middle">Commits</text>
 <path class="blue" d="M314.0,28H68.0Q64.0,28 64.0,32.0V40.0Q64.0,44 68.0,44H314.0Z"/>
 <text class="num" x="58.0" y="40.0" text-anchor="end">1,879</text>
-<path class="blue" d="M514.0,28H622.4Q626.4,28 626.4,32.0V40.0Q626.4,44 622.4,44H514.0Z"/>
-<text class="num" x="632.4" y="40.0" text-anchor="start">845</text>
+<path class="blue" d="M514.0,28H622.7Q626.7,28 626.7,32.0V40.0Q626.7,44 622.7,44H514.0Z"/>
+<text class="num" x="632.7" y="40.0" text-anchor="start">847</text>
 <text x="414.0" y="64.0" text-anchor="middle">Commits a year</text>
-<path class="blue" d="M314.0,52H75.9Q71.9,52 71.9,56.0V64.0Q71.9,68 75.9,68H314.0Z"/>
-<text class="num" x="65.9" y="64.0" text-anchor="end">298</text>
+<path class="blue" d="M314.0,52H76.2Q72.2,52 72.2,56.0V64.0Q72.2,68 76.2,68H314.0Z"/>
+<text class="num" x="66.2" y="64.0" text-anchor="end">298</text>
 <path class="blue" d="M514.0,52H760.0Q764.0,52 764.0,56.0V64.0Q764.0,68 760.0,68H514.0Z"/>
 <text class="num" x="770.0" y="64.0" text-anchor="start">308</text>
 <text x="414.0" y="88.0" text-anchor="middle">Lines added</text>
 <path class="blue" d="M314.0,76H68.0Q64.0,76 64.0,80.0V88.0Q64.0,92 68.0,92H314.0Z"/>
 <text class="num" x="58.0" y="88.0" text-anchor="end">246k</text>
-<path class="blue" d="M514.0,76H744.2Q748.2,76 748.2,80.0V88.0Q748.2,92 744.2,92H514.0Z"/>
-<text class="num" x="754.2" y="88.0" text-anchor="start">230k</text>
+<path class="blue" d="M514.0,76H744.3Q748.3,76 748.3,80.0V88.0Q748.3,92 744.3,92H514.0Z"/>
+<text class="num" x="754.3" y="88.0" text-anchor="start">231k</text>
 <text x="414.0" y="112.0" text-anchor="middle">Lines removed</text>
 <path class="blue" d="M314.0,100H68.0Q64.0,100 64.0,104.0V112.0Q64.0,116 68.0,116H314.0Z"/>
 <text class="num" x="58.0" y="112.0" text-anchor="end">127k</text>
