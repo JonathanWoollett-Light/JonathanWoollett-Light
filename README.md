@@ -2,7 +2,7 @@
 
 I lean towards systems programming and like optimising things. I'm a Physics PhD student at York, testing whether spiking neural networks are more robust, and before that I spent two years at AWS on [Firecracker](https://github.com/firecracker-microvm/firecracker) and [rust-vmm](https://github.com/rust-vmm). I'm also building [formal](https://github.com/JonathanWoollett-Light/formal), a verifying compiler for bare-metal RISC-V. [CV](https://jonathanwoollett-light.github.io/cv/) · [LinkedIn](https://www.linkedin.com/in/jonathan-wl/) · [YouTube](https://www.youtube.com/@alittlemorethananintroduct1604)
 
-- **Rust crate downloads**: <!-- crates -->26.8M, of which 848k are for [33 crates of my own](https://crates.io/users/JonathanWoollett-Light) and 25.9M for 10 [rust-vmm](https://github.com/rust-vmm) crates I co-maintained (team efforts)<!-- /crates -->
+- **Rust crate downloads**: <!-- crates -->26.9M, of which 850k are for [33 crates of my own](https://crates.io/users/JonathanWoollett-Light) and 26.0M for 10 [rust-vmm](https://github.com/rust-vmm) crates I co-maintained (team efforts)<!-- /crates -->
 - **Hearts of Iron IV mod downloads**: <!-- mods -->[The Think Tank](https://steamcommunity.com/sharedfiles/filedetails/?id=3342313594) 12k and [Rising Tide](https://steamcommunity.com/sharedfiles/filedetails/?id=3798403425) 1.9k, which are mine, and [Millennium Dawn](https://steamcommunity.com/sharedfiles/filedetails/?id=2777392649) 1.7M, a team project I'm one of the developers of<!-- /mods -->
 - **Practice**: <!-- practice -->39 [Project Euler](https://github.com/JonathanWoollett-Light/project_euler) and 40 [NeetCode](https://github.com/JonathanWoollett-Light/neetcode-submissions) problems solved<!-- /practice -->
 
