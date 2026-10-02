@@ -19,8 +19,8 @@ line { stroke: #898781; stroke-opacity: 0.5 }
 <path class="blue" d="M514.0,28H622.7Q626.7,28 626.7,32.0V40.0Q626.7,44 622.7,44H514.0Z"/>
 <text class="num" x="632.7" y="40.0" text-anchor="start">847</text>
 <text x="414.0" y="64.0" text-anchor="middle">Commits a year</text>
-<path class="blue" d="M314.0,52H76.0Q72.0,52 72.0,56.0V64.0Q72.0,68 76.0,68H314.0Z"/>
-<text class="num" x="66.0" y="64.0" text-anchor="end">298</text>
+<path class="blue" d="M314.0,52H75.8Q71.8,52 71.8,56.0V64.0Q71.8,68 75.8,68H314.0Z"/>
+<text class="num" x="65.8" y="64.0" text-anchor="end">298</text>
 <path class="blue" d="M514.0,52H760.0Q764.0,52 764.0,56.0V64.0Q764.0,68 760.0,68H514.0Z"/>
 <text class="num" x="770.0" y="64.0" text-anchor="start">308</text>
 <text x="414.0" y="88.0" text-anchor="middle">Lines added</text>
