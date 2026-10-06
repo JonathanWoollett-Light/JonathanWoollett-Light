@@ -19,9 +19,9 @@ On crates.io, <!-- crates -->the 10 [rust-vmm](https://github.com/rust-vmm) crat
 [YouTube](https://www.youtube.com/@alittlemorethananintroduct1604)
 
 <!-- git -->
-![My commits per year, before and after AI. 2017: 30; 2018: 36; 2019: 69; 2020: 448; 2021: 305; 2022: 348; 2023: 643; 2024: 362; 2025: 176; 2026: 317 (127 with an AI co-author)](https://raw.githubusercontent.com/JonathanWoollett-Light/JonathanWoollett-Light/main/commits.svg)
+![My commits per year, before and after AI. 2017: 30; 2018: 36; 2019: 69; 2020: 448; 2021: 305; 2022: 348; 2023: 643; 2024: 362; 2025: 176; 2026: 318 (127 with an AI co-author)](https://raw.githubusercontent.com/JonathanWoollett-Light/JonathanWoollett-Light/main/commits.svg)
 
-<sub>Since 2024 the median commit changes 50 lines against 16 before, 15% credit an AI co-author, and there are 310 a year against 298. 2,734 commits in all: the non-merge ones on the default branches of 126 repositories. AI co-authors are Co-authored-by trailers naming an AI tool (Claude 127), so uncredited AI help isn't counted. [Refreshed daily](https://github.com/JonathanWoollett-Light/JonathanWoollett-Light/blob/main/scripts/update_readme.py).</sub>
+<sub>Since 2024 the median commit changes 50 lines against 16 before, 15% credit an AI co-author, and there are 310 a year against 298. 2,735 commits in all: the non-merge ones on the default branches of 126 repositories. AI co-authors are Co-authored-by trailers naming an AI tool (Claude 127), so uncredited AI help isn't counted. [Refreshed daily](https://github.com/JonathanWoollett-Light/JonathanWoollett-Light/blob/main/scripts/update_readme.py).</sub>
 <!-- /git -->
 
 Outside research I work on Hearts of Iron IV mods: <!-- mods -->[Millennium Dawn](https://steamcommunity.com/sharedfiles/filedetails/?id=2777392649) (1.7M downloads) as one of its developers, and [The Think Tank](https://steamcommunity.com/sharedfiles/filedetails/?id=3342313594) (12k) and [Rising Tide](https://steamcommunity.com/sharedfiles/filedetails/?id=3798403425) (2.0k), which are mine<!-- /mods -->.
