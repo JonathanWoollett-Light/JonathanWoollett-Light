@@ -1,15 +1,28 @@
-### Hi ✋ I'm Jonathan
+### Jonathan Woollett-Light
 
-I lean towards systems programming and like optimising things. I'm a Physics PhD student at York, testing whether spiking neural networks are more robust, and before that I spent two years at AWS on [Firecracker](https://github.com/firecracker-microvm/firecracker) and [rust-vmm](https://github.com/rust-vmm). I'm also building [formal](https://github.com/JonathanWoollett-Light/formal), a verifying compiler for bare-metal RISC-V. [CV](https://jonathanwoollett-light.github.io/cv/) · [LinkedIn](https://www.linkedin.com/in/jonathan-wl/) · [YouTube](https://www.youtube.com/@alittlemorethananintroduct1604)
+I study the robustness of neural networks. I'm a Physics PhD student at the University of York,
+and my thesis asks whether spiking neural networks are more robust than conventional ones. My
+current paper measures what the reset after each spike buys in accuracy and in robustness to
+changes in spike count, order and timing, now that some spiking models drop it to run in parallel
+over time.
 
-- **Rust crate downloads**: <!-- crates -->27.1M, of which 854k are for [33 crates of my own](https://crates.io/users/JonathanWoollett-Light) and 26.2M for 10 [rust-vmm](https://github.com/rust-vmm) crates I co-maintained (team efforts)<!-- /crates -->
-- **Hearts of Iron IV mod downloads**: <!-- mods -->[The Think Tank](https://steamcommunity.com/sharedfiles/filedetails/?id=3342313594) 12k and [Rising Tide](https://steamcommunity.com/sharedfiles/filedetails/?id=3798403425) 2.0k, which are mine, and [Millennium Dawn](https://steamcommunity.com/sharedfiles/filedetails/?id=2777392649) 1.7M, a team project I'm one of the developers of<!-- /mods -->
-- **Practice**: <!-- practice -->42 [Project Euler](https://github.com/JonathanWoollett-Light/project_euler) and 41 [NeetCode](https://github.com/JonathanWoollett-Light/neetcode-submissions) problems solved<!-- /practice -->
+Before the PhD I spent two years as a software engineer at AWS on
+[Firecracker](https://github.com/firecracker-microvm/firecracker), the virtual machine monitor
+behind AWS Lambda, and co-maintained [rust-vmm](https://github.com/rust-vmm). I'm also building
+[formal](https://github.com/JonathanWoollett-Light/formal), a verifying compiler for bare-metal
+RISC-V that accepts a program only if it can prove, from the machine code and across every thread
+interleaving, that no assertion can fail and no memory access goes out of bounds.
+On crates.io, <!-- crates -->the 10 [rust-vmm](https://github.com/rust-vmm) crates I co-maintained have 26.2M downloads and [33 crates of my own](https://crates.io/users/JonathanWoollett-Light) have 854k<!-- /crates -->.
 
-[![Grid of every Project Euler problem, with the ones I've solved filled in](https://raw.githubusercontent.com/JonathanWoollett-Light/JonathanWoollett-Light/main/euler.svg)](https://github.com/JonathanWoollett-Light/project_euler) ![Column chart of my commits per year, before and after AI, with those that have an AI co-author stacked on top](https://raw.githubusercontent.com/JonathanWoollett-Light/JonathanWoollett-Light/main/commits.svg)
+[CV](https://jonathanwoollett-light.github.io/cv/) ·
+[LinkedIn](https://www.linkedin.com/in/jonathan-wl/) ·
+[YouTube](https://www.youtube.com/@alittlemorethananintroduct1604)
 
 <!-- git -->
-![My commits before and after AI. Commits: 1,879 before, 853 after; Commits a year: 298 before, 309 after; Lines added: 246k before, 234k after; Lines removed: 127k before, 85k after; Median lines changed per commit: 16 before, 50 after; With an AI co-author: 0 before, 127 (15%) after](https://raw.githubusercontent.com/JonathanWoollett-Light/JonathanWoollett-Light/main/before-after.svg)
+![My commits per year, before and after AI. 2017: 30; 2018: 36; 2019: 69; 2020: 448; 2021: 305; 2022: 348; 2023: 643; 2024: 362; 2025: 176; 2026: 315 (127 with an AI co-author)](https://raw.githubusercontent.com/JonathanWoollett-Light/JonathanWoollett-Light/main/commits.svg)
 
-<sub>2,732 commits in all: the non-merge ones on the default branches of 126 repositories. Line totals skip 23 commits of over 10,000 lines, mostly data. AI co-authors are Co-authored-by trailers naming an AI tool (Claude 127), so uncredited AI help isn't counted. [Refreshed daily](https://github.com/JonathanWoollett-Light/JonathanWoollett-Light/blob/main/scripts/update_readme.py).</sub>
+<sub>Since 2024 the median commit changes 50 lines against 16 before, 15% credit an AI co-author, and there are 309 a year against 298. 2,732 commits in all: the non-merge ones on the default branches of 126 repositories. AI co-authors are Co-authored-by trailers naming an AI tool (Claude 127), so uncredited AI help isn't counted. [Refreshed daily](https://github.com/JonathanWoollett-Light/JonathanWoollett-Light/blob/main/scripts/update_readme.py).</sub>
 <!-- /git -->
+
+Outside research I work on Hearts of Iron IV mods: <!-- mods -->[Millennium Dawn](https://steamcommunity.com/sharedfiles/filedetails/?id=2777392649) (1.7M downloads) as one of its developers, and [The Think Tank](https://steamcommunity.com/sharedfiles/filedetails/?id=3342313594) (12k) and [Rising Tide](https://steamcommunity.com/sharedfiles/filedetails/?id=3798403425) (2.0k), which are mine<!-- /mods -->.
+I'm also working through [Project Euler](https://github.com/JonathanWoollett-Light/project_euler).

@@ -1,18 +1,18 @@
-"""Refresh the generated parts of README.md and the figures in it.
+"""Refresh the generated parts of README.md and the figure in it.
 
 README.md is hand-written apart from the text between `<!-- name -->` and
 `<!-- /name -->` markers, which this rewrites from live data:
 
-    crates    downloads of my crates, from crates.io
-    mods      downloads of my Hearts of Iron IV mods, from the Steam Workshop
-    practice  problems I've solved on Project Euler and NeetCode, drawn in euler.svg
-    git       my commits before and after AI, from GitHub, charted by year in
-              commits.svg and side by side in before-after.svg
+    crates  downloads of my crates, from crates.io
+    mods    downloads of my Hearts of Iron IV mods, from the Steam Workshop
+    git     my commits before and after AI, from GitHub, charted by year in
+            commits.svg
 
 A section whose source can't be reached is left as it was, and the script exits
-non-zero once the rest are written.
+non-zero once the rest are written. A marker inside a paragraph mustn't start a
+line: Markdown would read that line as raw HTML and print its links as text.
 
-The GitHub sections need a token in GITHUB_TOKEN, and it decides what's counted:
+The git section needs a token in GITHUB_TOKEN, and it decides what's counted:
 the workflow's own token only sees public repositories, while a personal token
 that can read my private ones counts those too (without naming them).
 
@@ -37,13 +37,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 README = ROOT / "README.md"
-EULER_CHART = ROOT / "euler.svg"
 COMMITS_CHART = ROOT / "commits.svg"
-COMPARISON_CHART = ROOT / "before-after.svg"
 
 USER = "JonathanWoollett-Light"
 USER_AGENT = f"{USER} profile README (https://github.com/{USER}/{USER})"
-# Where GitHub serves this repository's files, and so the figures, from.
+# Where GitHub serves this repository's files, and so the figure, from.
 RAW = f"https://raw.githubusercontent.com/{USER}/{USER}/main"
 
 CRATES_USER_ID = 79784  # https://crates.io/users/JonathanWoollett-Light
@@ -54,18 +52,10 @@ TEAM_ORGS = ("rust-vmm",)
 MY_MODS = {3342313594: "The Think Tank", 3798403425: "Rising Tide"}
 TEAM_MODS = {2777392649: "Millennium Dawn"}
 
-# My project_euler repository draws its own progress grid; the problems it
-# marks solved are redrawn smaller here.
-EULER_GRID = f"https://raw.githubusercontent.com/{USER}/project_euler/master/progress.svg"
-NEETCODE_REPO = f"{USER}/neetcode-submissions"
-
 # Addresses I've committed with that aren't linked to my GitHub account any more
 # (an old work address and a typo), so GitHub's author filter misses them.
 OTHER_EMAILS = ["jcawl@amazon.co.uk", "jonthanwoollettlight@gmail.com"]
 AI_ERA = 2024  # commits authored from this year on count as "after AI"
-# Commits changing more lines than this are nearly always datasets, experiment
-# output or vendored code, so they're left out of the line totals.
-BULK_LINES = 10_000
 # Co-authored-by trailers that credit an AI tool, matched against "Name <email>".
 AI_TOOLS = {
     "Claude": r"@anthropic\.com",
@@ -148,10 +138,11 @@ def crates_section():
     team = [c["downloads"] for c in crates if is_team(c)]
     mine = [c["downloads"] for c in crates if not is_team(c)]
     orgs = listing([f"[{org}](https://github.com/{org})" for org in TEAM_ORGS])
+    # It completes the README's sentence "On crates.io, ...", team crates first so
+    # the big number is never read as mine alone.
     return (
-        f"{compact(sum(team) + sum(mine))}, of which {compact(sum(mine))} are for "
-        f"[{len(mine)} crates of my own](https://crates.io/users/{USER}) and {compact(sum(team))} "
-        f"for {len(team)} {orgs} crates I co-maintained (team efforts)"
+        f"the {len(team)} {orgs} crates I co-maintained have {compact(sum(team))} downloads and "
+        f"[{len(mine)} crates of my own](https://crates.io/users/{USER}) have {compact(sum(mine))}"
     )
 
 
@@ -172,31 +163,16 @@ def mods_section():
         # Steam doesn't count downloads; its lifetime subscriptions are the nearest thing.
         downloads[int(mod["publishedfileid"])] = mod["lifetime_subscriptions"]
 
-    def links(mods):
+    def links(mods, unit=""):
+        """Each mod linked, with its downloads in brackets, the first also naming `unit`."""
         return listing([
-            f"[{name}](https://steamcommunity.com/sharedfiles/filedetails/?id={id}) {compact(downloads[id])}"
-            for id, name in mods.items()
+            f"[{name}](https://steamcommunity.com/sharedfiles/filedetails/?id={id}) "
+            f"({compact(downloads[id])}{unit if i == 0 else ''})"
+            for i, (id, name) in enumerate(mods.items())
         ])
 
-    return f"{links(MY_MODS)}, which are mine, and {links(TEAM_MODS)}, a team project I'm one of the developers of"
-
-
-# Project Euler and NeetCode
-
-
-def practice_section():
-    grid = fetch(EULER_GRID).decode()
-    total = int(re.search(r'data-problems="(\d+)"', grid)[1])
-    solved = {int(n) for n in re.findall(r"Problem (\d+): solved", grid)}
-    url = f"https://api.github.com/repos/{NEETCODE_REPO}/git/trees/HEAD?recursive=1"
-    tree = fetch_json(url, headers=github_headers())["tree"]
-    # Solutions are synced to "<topic>/<problem>/submission-<n>.<ext>".
-    neetcode = {entry["path"].split("/")[1] for entry in tree if entry["path"].count("/") == 2}
-    write_if_changed(EULER_CHART, euler_chart(solved, total))
-    return (
-        f"{len(solved)} [Project Euler](https://github.com/{USER}/project_euler) and "
-        f"{len(neetcode)} [NeetCode](https://github.com/{NEETCODE_REPO}) problems solved"
-    )
+    # It completes the README's sentence "Outside research I work on Hearts of Iron IV mods: ...".
+    return f"{links(TEAM_MODS, ' downloads')} as one of its developers, and {links(MY_MODS)}, which are mine"
 
 
 # Git
@@ -320,36 +296,19 @@ def my_commits():
         return list({oid: commit for batch in found for oid, commit in batch.items()}.values())
 
 
-AI_ROW = "With an AI co-author"  # the comparison's row drawn in the AI colour
-
-
 def git_section():
     commits = my_commits()
     now = datetime.now(timezone.utc)
     first = min(c.date for c in commits)
     era = datetime(AI_ERA, 1, 1, tzinfo=timezone.utc)
 
-    def counted(group):
-        return [c for c in group if c.lines and sum(c.lines) <= BULK_LINES]
-
     def summary(group, years):
-        """Each compared measure of `group`, which spans `years`, as its value and how to show it."""
-        added, removed = (sum(c.lines[i] for c in counted(group)) for i in (0, 1))
+        """Commits a year, the median lines changed per commit, and the share with an AI co-author."""
         median = statistics.median(sum(c.lines) for c in group if c.lines)
-        ai = sum(1 for c in group if c.ai)
-        return {
-            "Commits": (len(group), f"{len(group):,}"),
-            "Commits a year": (len(group) / years, f"{len(group) / years:,.0f}"),
-            "Lines added": (added, compact(added)),
-            "Lines removed": (removed, compact(removed)),
-            "Median lines changed per commit": (median, f"{median:,.0f}"),
-            AI_ROW: (ai, f"{ai:,} ({ai / len(group):.0%})" if ai else "0"),
-        }
+        return len(group) / years, median, sum(1 for c in group if c.ai) / len(group)
 
     before = summary([c for c in commits if c.date < era], (era - first).days / 365.25)
     after = summary([c for c in commits if c.date >= era], (now - era).days / 365.25)
-    headings = (f"Before AI ({first.year}–{AI_ERA - 1})", f"After AI ({AI_ERA}–{now.year})")
-    write_if_changed(COMPARISON_CHART, comparison_chart(headings, before, after))
 
     by_year = {year: [c for c in commits if c.date.year == year] for year in range(first.year, now.year + 1)}
     totals = {year: (len(group), sum(1 for c in group if c.ai)) for year, group in by_year.items()}
@@ -357,37 +316,38 @@ def git_section():
 
     repos = {c.repo: c.private for c in commits}
     private = sum(repos.values())
-    bulk = len(commits) - len(counted(commits))
     tools = {tool: sum(1 for c in commits if tool in c.ai) for tool in AI_TOOLS}
     tools = ", ".join(f"{tool} {n:,}" for tool, n in sorted(tools.items(), key=lambda kv: -kv[1]) if n)
     notes = (
-        f"{len(commits):,} commits in all: the non-merge ones on the default branches of {len(repos)} "
-        f"repositories" + (f" ({private} private)" if private else "") + f". Line totals skip {bulk} commits "
-        f"of over {BULK_LINES:,} lines, mostly data. AI co-authors are Co-authored-by trailers naming an AI "
-        f"tool ({tools or 'none yet'}), so uncredited AI help isn't counted. "
-        f"[Refreshed daily](https://github.com/{USER}/{USER}/blob/main/scripts/update_readme.py)."
+        f"Since {AI_ERA} the median commit changes {after[1]:,.0f} lines against {before[1]:,.0f} before, "
+        f"{after[2]:.0%} credit an AI co-author, and there are {after[0]:,.0f} a year against "
+        f"{before[0]:,.0f}. {len(commits):,} commits in all: the non-merge ones on the default branches of "
+        f"{len(repos)} repositories" + (f" ({private} private)" if private else "") + ". AI co-authors are "
+        f"Co-authored-by trailers naming an AI tool ({tools or 'none yet'}), so uncredited AI help isn't "
+        f"counted. [Refreshed daily](https://github.com/{USER}/{USER}/blob/main/scripts/update_readme.py)."
     )
-    # The image's text says what its bars show, for anyone who can't see them.
-    alt = "; ".join(f"{label}: {before[label][1]} before, {after[label][1]} after" for label in before)
-    return f"![My commits before and after AI. {alt}]({RAW}/{COMPARISON_CHART.name})\n\n<sub>{notes}</sub>"
+    # The image's text gives each year's columns, for anyone who can't see them.
+    alt = "; ".join(
+        f"{year}: {total:,}" + (f" ({ai:,} with an AI co-author)" if ai else "") for year, (total, ai) in totals.items()
+    )
+    return f"![My commits per year, before and after AI. {alt}]({RAW}/{COMMITS_CHART.name})\n\n<sub>{notes}</sub>"
 
 
 # Figures
 
 # The README can be viewed on a light or dark page, and GitHub can't be relied
-# on to pick an image per theme, so these colours work on both. They match the
-# Project Euler grid's.
+# on to pick an image per theme, so these colours work on both.
 BLUE = "#2a78d6"
 ORANGE = "#d95926"
 INK = "#7d7b76"
-GREY = "#898781"  # drawn faint, for empty squares and rules
-# The Euler grid and commits chart share a size, which fits them side by side
-# in the README on a desktop screen and stacks them on narrower ones.
+GREY = "#898781"  # drawn faint, for rules
+# Half the README's width on a desktop screen, so that a phone, which shrinks
+# the figure to fit, leaves its 11px text legible.
 WIDTH, HEIGHT = 412, 200
 
 
 def svg_start(title, width=WIDTH, height=HEIGHT):
-    """The opening of a figure, with the styles they all share."""
+    """The opening of a figure, with its styles."""
     return [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
         f'viewBox="0 0 {width} {height}" role="img">',
@@ -396,9 +356,8 @@ def svg_start(title, width=WIDTH, height=HEIGHT):
         f"text {{ font: 11px system-ui, -apple-system, 'Segoe UI', sans-serif; fill: {INK} }}",
         ".head { font-size: 12px; font-weight: 600 }",
         ".num { font-variant-numeric: tabular-nums }",
-        f"rect {{ fill: {GREY}; fill-opacity: 0.2 }}",
-        f".blue {{ fill: {BLUE}; fill-opacity: 1 }}",
-        f".orange {{ fill: {ORANGE}; fill-opacity: 1 }}",
+        f".blue {{ fill: {BLUE} }}",
+        f".orange {{ fill: {ORANGE} }}",
         f"line {{ stroke: {GREY}; stroke-opacity: 0.5 }}",
         "</style>",
     ]
@@ -410,30 +369,6 @@ def key(x, colour, label):
         f'<rect class="{colour}" x="{x}" y="4" width="12" height="12" rx="2"/>',
         f'<text class="head" x="{x + 18}" y="15">{label}</text>',
     ]
-
-
-EULER_COLUMNS = 50  # as on the Project Euler archive's pages, and in my full grid
-CELL, CELL_GAP = 6, 2
-GROUP_GAP = 3  # extra space after every 10 columns, to make counting easier
-GRID_TOP = 26
-
-
-def euler_chart(solved, total):
-    """Every Project Euler problem as a square, filled in if I've solved it."""
-    pitch = CELL + CELL_GAP
-    rows = -(-total // EULER_COLUMNS)
-    height = max(HEIGHT, GRID_TOP + rows * pitch - CELL_GAP)
-    svg = svg_start(f"Project Euler: {len(solved)} of {total:,} problems solved", height=height)
-    svg += key(0, "blue", f"{len(solved)} of {total:,} Project Euler problems solved")
-    for n in range(1, total + 1):
-        row, col = divmod(n - 1, EULER_COLUMNS)
-        fill = ' class="blue"' if n in solved else ""
-        svg.append(
-            f'<rect{fill} x="{col * pitch + col // 10 * GROUP_GAP}" y="{GRID_TOP + row * pitch}" '
-            f'width="{CELL}" height="{CELL}" rx="1"/>'
-        )
-    svg.append("</svg>")
-    return "\n".join(svg) + "\n"
 
 
 PLOT_TOP, PLOT_BOTTOM = 66, 178  # the tallest column reaches PLOT_TOP
@@ -482,58 +417,6 @@ def commits_chart(totals):
     return "\n".join(svg) + "\n"
 
 
-COMPARISON_WIDTH = 828  # the two figures above it, side by side
-LABELS_WIDTH = 200  # the middle column, naming each row
-VALUE_ROOM = 64  # beyond the longest bars, for their values
-ROWS_TOP, ROW_PITCH, ROW_BAR = 28, 24, 16
-
-
-def bar(inner, outer, y):
-    """A horizontal bar's outline, square at `inner` and rounded at `outer`."""
-    d = 1 if outer > inner else -1
-    r = min(RADIUS, abs(outer - inner))
-    bottom = y + ROW_BAR
-    return (
-        f"M{inner:.1f},{y}H{outer - d * r:.1f}Q{outer:.1f},{y} {outer:.1f},{y + r:.1f}"
-        f"V{bottom - r:.1f}Q{outer:.1f},{bottom} {outer - d * r:.1f},{bottom}H{inner:.1f}Z"
-    )
-
-
-def comparison_chart(headings, before, after):
-    """Back-to-back bars of each measure before (left) and after (right) AI.
-
-    The measures don't share a unit, so each row has its own scale, with its
-    longer bar at full length; the values printed beside them carry the rest.
-    """
-    centre = COMPARISON_WIDTH / 2
-    edges = (centre - LABELS_WIDTH / 2, centre + LABELS_WIDTH / 2)  # where each side's bars start
-    longest = edges[0] - VALUE_ROOM
-    height = ROWS_TOP + len(before) * ROW_PITCH - (ROW_PITCH - ROW_BAR)
-    svg = svg_start("My commits before and after AI", COMPARISON_WIDTH, height)
-    svg += [
-        f'<text class="head" x="{edges[0] / 2:.1f}" y="15" text-anchor="middle">{headings[0]}</text>',
-        f'<text class="head" x="{(edges[1] + COMPARISON_WIDTH) / 2:.1f}" y="15" text-anchor="middle">'
-        f"{headings[1]}</text>",
-        *(f'<line x1="{x}" y1="{ROWS_TOP - 4}" x2="{x}" y2="{height}"/>' for x in edges),
-    ]
-    for i, label in enumerate(before):
-        y = ROWS_TOP + i * ROW_PITCH
-        baseline = y + ROW_BAR / 2 + 4  # centres 11px text on the bars
-        scale = longest / (max(before[label][0], after[label][0]) or 1)
-        colour = "orange" if label == AI_ROW else "blue"
-        svg.append(f'<text x="{centre}" y="{baseline}" text-anchor="middle">{label}</text>')
-        for inner, direction, (value, shown) in zip(edges, (-1, 1), (before[label], after[label])):
-            outer = inner + direction * value * scale
-            if value:
-                svg.append(f'<path class="{colour}" d="{bar(inner, outer, y)}"/>')
-            svg.append(
-                f'<text class="num" x="{outer + direction * 6:.1f}" y="{baseline}" '
-                f'text-anchor="{"end" if direction < 0 else "start"}">{shown}</text>'
-            )
-    svg.append("</svg>")
-    return "\n".join(svg) + "\n"
-
-
 def write_if_changed(path, text):
     if not path.exists() or path.read_text(encoding="utf-8") != text:
         path.write_text(text, encoding="utf-8", newline="\n")
@@ -541,7 +424,7 @@ def write_if_changed(path, text):
 
 def main():
     readme = README.read_text(encoding="utf-8")
-    sections = {"crates": crates_section, "mods": mods_section, "practice": practice_section, "git": git_section}
+    sections = {"crates": crates_section, "mods": mods_section, "git": git_section}
     failed = []
     for name, build in sections.items():
         marked = re.compile(rf"(<!-- {name} -->)(.*?)(<!-- /{name} -->)", re.DOTALL)
