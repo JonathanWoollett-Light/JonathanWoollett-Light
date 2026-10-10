@@ -12,7 +12,7 @@ behind AWS Lambda, and co-maintained [rust-vmm](https://github.com/rust-vmm). I'
 [formal](https://github.com/JonathanWoollett-Light/formal), a verifying compiler for bare-metal
 RISC-V that accepts a program only if it can prove, from the machine code and across every thread
 interleaving, that no assertion can fail and no memory access goes out of bounds.
-On crates.io, <!-- crates -->the 10 [rust-vmm](https://github.com/rust-vmm) crates I co-maintained have 26.6M downloads and [33 crates of my own](https://crates.io/users/JonathanWoollett-Light) have 860k<!-- /crates -->.
+On crates.io, <!-- crates -->the 10 [rust-vmm](https://github.com/rust-vmm) crates I co-maintained have 26.7M downloads and [33 crates of my own](https://crates.io/users/JonathanWoollett-Light) have 862k<!-- /crates -->.
 
 [CV](https://jonathanwoollett-light.github.io/cv/) ·
 [LinkedIn](https://www.linkedin.com/in/jonathan-wl/) ·
