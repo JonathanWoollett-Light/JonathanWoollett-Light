@@ -37,14 +37,14 @@ line { stroke: #898781; stroke-opacity: 0.5 }
 <path class="blue" d="M257,178.0V70.0Q257,66.0 261.0,66.0H275.0Q279,66.0 279,70.0V178.0Z"/>
 <text class="num" x="268.0" y="61.0" text-anchor="middle">643</text>
 <text class="num" x="268.0" y="194" text-anchor="middle">2023</text>
-<path class="blue" d="M298,178.0V118.9Q298,114.9 302.0,114.9H316.0Q320,114.9 320,118.9V178.0Z"/>
-<text class="num" x="309.0" y="109.9" text-anchor="middle">362</text>
+<path class="blue" d="M298,178.0V130.4Q298,126.4 302.0,126.4H316.0Q320,126.4 320,130.4V178.0Z"/>
+<text class="num" x="309.0" y="121.4" text-anchor="middle">296</text>
 <text class="num" x="309.0" y="194" text-anchor="middle">2024</text>
-<path class="blue" d="M339,178.0V151.3Q339,147.3 343.0,147.3H357.0Q361,147.3 361,151.3V178.0Z"/>
-<text class="num" x="350.0" y="142.3" text-anchor="middle">176</text>
+<path class="blue" d="M339,178.0V152.7Q339,148.7 343.0,148.7H357.0Q361,148.7 361,152.7V178.0Z"/>
+<text class="num" x="350.0" y="143.7" text-anchor="middle">168</text>
 <text class="num" x="350.0" y="194" text-anchor="middle">2025</text>
-<path class="blue" d="M380,178.0V141.9Q380,141.9 380.0,141.9H402.0Q402,141.9 402,141.9V178.0Z"/>
-<path class="orange" d="M380,139.9V121.8Q380,117.8 384.0,117.8H398.0Q402,117.8 402,121.8V139.9Z"/>
-<text class="num" x="391.0" y="112.8" text-anchor="middle">334</text>
+<path class="blue" d="M380,178.0V144.0Q380,144.0 380.0,144.0H402.0Q402,144.0 402,144.0V178.0Z"/>
+<path class="orange" d="M380,142.0V141.7Q380,137.7 384.0,137.7H398.0Q402,137.7 402,141.7V142.0Z"/>
+<text class="num" x="391.0" y="132.7" text-anchor="middle">220</text>
 <text class="num" x="391.0" y="194" text-anchor="middle">2026</text>
 </svg>
