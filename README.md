@@ -12,7 +12,7 @@ behind AWS Lambda, and co-maintained [rust-vmm](https://github.com/rust-vmm). I'
 [formal](https://github.com/JonathanWoollett-Light/formal), a verifying compiler for bare-metal
 RISC-V that accepts a program only if it can prove, from the machine code and across every thread
 interleaving, that no assertion can fail and no memory access goes out of bounds.
-On crates.io, <!-- crates -->the 10 [rust-vmm](https://github.com/rust-vmm) crates I co-maintained have 31.9M downloads and [33 crates of my own](https://crates.io/users/JonathanWoollett-Light) have 924k<!-- /crates -->.
+On crates.io, <!-- crates -->the 10 [rust-vmm](https://github.com/rust-vmm) crates I co-maintained have 32.0M downloads and [33 crates of my own](https://crates.io/users/JonathanWoollett-Light) have 925k<!-- /crates -->.
 
 [CV](https://jonathanwoollett-light.github.io/cv/) ·
 [LinkedIn](https://www.linkedin.com/in/jonathan-wl/) ·
@@ -24,5 +24,5 @@ On crates.io, <!-- crates -->the 10 [rust-vmm](https://github.com/rust-vmm) crat
 <sub>Since 2024 the median commit changes 26 lines against 16 before, 4% credit an AI co-author, and there are 241 a year against 298. 2,575 commits in all: the non-merge ones on the default branches of 125 repositories. AI co-authors are Co-authored-by trailers naming an AI tool (Claude 26), so uncredited AI help isn't counted. [Refreshed daily](https://github.com/JonathanWoollett-Light/JonathanWoollett-Light/blob/main/scripts/update_readme.py).</sub>
 <!-- /git -->
 
-Outside research I work on Hearts of Iron IV mods: <!-- mods -->[Millennium Dawn](https://steamcommunity.com/sharedfiles/filedetails/?id=2777392649) (1.7M downloads) as one of its developers, and [The Think Tank](https://steamcommunity.com/sharedfiles/filedetails/?id=3342313594) (12k) and [Rising Tide](https://steamcommunity.com/sharedfiles/filedetails/?id=3798403425) (3.1k), which are mine<!-- /mods -->.
+Outside research I work on Hearts of Iron IV mods: <!-- mods -->[Millennium Dawn](https://steamcommunity.com/sharedfiles/filedetails/?id=2777392649) (1.7M downloads) as one of its developers, and [The Think Tank](https://steamcommunity.com/sharedfiles/filedetails/?id=3342313594) (12k) and [Rising Tide](https://steamcommunity.com/sharedfiles/filedetails/?id=3798403425) (3.2k), which are mine<!-- /mods -->.
 I'm also working through [Project Euler](https://github.com/JonathanWoollett-Light/project_euler).
